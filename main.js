@@ -27,6 +27,7 @@ var LASER_SPEED = 3000;
 var cursors;
 var robot;
 var blocks;
+var dangerous_blocks;
 var portal_blue;
 var laser_blue;
 var portal_yellow;
@@ -64,6 +65,10 @@ function loadLevel(level) {
     const [sX, sY] = block.scale;
     blocks.create(bX, bY, "block_black").setScale(sX, sY);
   });
+
+
+  b = dangerous_blocks.create(400, 400, "block_red").setScale(5, 5);
+  b.setVelocityX(1000)
 }
 
 function create() {
@@ -90,6 +95,12 @@ function create() {
     allowGravity: false
   });
 
+  dangerous_blocks = this.physics.add.group({
+    immovable: true,
+    allowGravity: false
+  });
+
+
   blocks.create(-25, 600, "block_white").setScale(1, 24);
   blocks.create(1625, 600, "block_white").setScale(1, 24);
   blocks.create(800, -25, "block_white").setScale(32, 1);
@@ -99,6 +110,8 @@ function create() {
 
   this.physics.add.collider(laser_blue, blocks, makePortal("blue"));
   this.physics.add.collider(laser_yellow, blocks, makePortal("yellow"));
+  that.physics.add.collider(dangerous_blocks, blocks, (x,y) => {console.log("lol")});
+
   initCollider();
 }
 
