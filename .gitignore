@@ -1,0 +1,4 @@
+node_modules/
+phaser3-examples/
+phaser3-tutorial-src/
+*.DS_Store
