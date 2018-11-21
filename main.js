@@ -67,8 +67,17 @@ function loadLevel(level) {
   });
 
 
-  b = dangerous_blocks.create(400, 400, "block_red").setScale(5, 5);
-  b.setVelocityX(1000)
+  for(i=0; i<4; i++){
+    b1 = dangerous_blocks.create(300+150*i, 300+100*i, "block_red").setScale(1, 1);
+    b2 = dangerous_blocks.create(800-150*i, 300+100*i+50, "block_red").setScale(1, 1);
+
+    b1.setVelocityX(600);
+    b1.body.bounce.set(1);
+
+    b2.setVelocityX(-600);
+    b2.body.bounce.set(1);
+  }
+
 }
 
 function create() {
@@ -96,7 +105,7 @@ function create() {
   });
 
   dangerous_blocks = this.physics.add.group({
-    immovable: true,
+    immovable: false,
     allowGravity: false
   });
 
@@ -110,7 +119,7 @@ function create() {
 
   this.physics.add.collider(laser_blue, blocks, makePortal("blue"));
   this.physics.add.collider(laser_yellow, blocks, makePortal("yellow"));
-  that.physics.add.collider(dangerous_blocks, blocks, (x,y) => {console.log("lol")});
+  that.physics.add.collider(dangerous_blocks, blocks);
 
   initCollider();
 }
