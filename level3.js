@@ -1,7 +1,7 @@
 levels.push({
   robot_initial_position: [75, 800],
   blocks: [
-    { position: [250, 1000], scale: [10, 3] },
+    { position: [50, 1000], scale: [3, 3] },
     { position: [1000, 1000], scale: [10, 3] }
   ],
   killers: [
@@ -35,7 +35,30 @@ levels.push({
     { position: [1400, 1150], speed: [0, 0] },
     { position: [1450, 1150], speed: [0, 0] },
     { position: [1500, 1150], speed: [0, 0] },
-    { position: [1550, 1150], speed: [0, 0] }
+    { position: [1550, 1150], speed: [0, 0] },
+    { position: [450, 50], speed: [0, 0] },
+    { position: [500, 50], speed: [0, 0] },
+    { position: [550, 50], speed: [0, 0] },
+    { position: [600, 50], speed: [0, 0] },
+    { position: [650, 50], speed: [0, 0] },
+    { position: [700, 50], speed: [0, 0] },
+    { position: [750, 50], speed: [0, 0] },
+    { position: [800, 50], speed: [0, 0] },
+    { position: [850, 50], speed: [0, 0] },
+    { position: [900, 50], speed: [0, 0] },
+    { position: [950, 50], speed: [0, 0] },
+    { position: [1000, 50], speed: [0, 0] },
+    { position: [1050, 50], speed: [0, 0] },
+    { position: [1100, 50], speed: [0, 0] },
+    { position: [1150, 50], speed: [0, 0] },
+    { position: [1200, 50], speed: [0, 0] },
+    { position: [1250, 50], speed: [0, 0] },
+    { position: [1300, 50], speed: [0, 0] },
+    { position: [1350, 50], speed: [0, 0] },
+    { position: [1400, 50], speed: [0, 0] },
+    { position: [1450, 50], speed: [0, 0] },
+    { position: [1500, 50], speed: [0, 0] },
+    { position: [1550, 50], speed: [0, 0] }
   ],
   victory: { position: [1300, 800], scale: [1, 14] }
 });
