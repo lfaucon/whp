@@ -48,6 +48,8 @@ function preload() {
 
   this.load.image("block_white", "assets/50x50-white.png");
   this.load.image("block_black", "assets/50x50-black.png");
+  //this.load.image("block_red", "assets/50x50-red.png");
+
   this.load.image("robot", "assets/50x50-pink.png");
 
   this.load.image("portal_blue", "assets/12x12-blue.png");
@@ -121,8 +123,46 @@ function create() {
   this.physics.add.collider(laser_yellow, blocks, makePortal("yellow"));
   that.physics.add.collider(dangerous_blocks, blocks);
 
+  that.physics.add.collider(dangerous_blocks, robot, robotDeath);
+
+
   initCollider();
 }
+
+
+
+
+
+const robotDeath = () => {
+  console.log("death!!")
+
+  that.physics.pause();
+
+  /*
+    var bar = that.add.graphics();
+    //bar.beginFill(0x000000, 0.2);
+    bar.drawRect(0, 100, 800, 100);
+*/
+    graphics = that.add.graphics();
+
+    graphics.fillStyle(0xffff00, 0.2);
+    graphics.fillRect(0, 0, 1600, 1200)
+
+
+    var style = { font: "bold 164px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+  
+    //  The Text is positioned at 0, 100
+    text = that.add.text(800, 600, "You're dead", style).setOrigin(0.5, 0.5);
+    text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+
+    //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
+    //text.setTextBounds(0, 100, 800, 100);
+
+    that.input.keyboard.on('keydown', function (event) { 
+      that.scene.restart();
+    });
+}
+
 
 const initCollider = () => {
   if (collider) {
