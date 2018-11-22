@@ -1,5 +1,5 @@
 levels.push({
-  robot_initial_position: [75, 800],
+  robot: { position: [75, 800], hasBlueGun: true, hasYellowGun: true },
   blocks: [
     { position: [50, 1000], scale: [3, 3] },
     { position: [1000, 1000], scale: [10, 3] }

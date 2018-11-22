@@ -64,7 +64,7 @@ function loadLevel(level) {
   if (!level) return;
 
   // Add the sprite for the robot
-  const [rX, rY] = level.robot_initial_position;
+  const [rX, rY] = level.robot.position;
   robot = that.physics.add.sprite(rX, rY, "robot");
 
   // Add blocks to the board
@@ -139,13 +139,14 @@ function create() {
   cursors = this.input.keyboard.createCursorKeys();
 
   // Starts playing an amazing
-  //this.sound.add("space_music", { loop: true }).play();
+  // this.sound.add("space_music", { loop: true }).play();
   sound_effect = this.sound.add("space_sound_effect", { loop: false });
 
   // Camera :)
   this.cameras.main.setZoom(0.5);
 
   loadLevel(levels[currentLevel]);
+  that.input.on("pointerup", shootLaser);
 }
 
 const robotDeath = () => {
@@ -266,44 +267,34 @@ const teleportTo = color => () => {
   }
 };
 
+const shootLaser = pointer => {
+  const level = levels[currentLevel].robot;
+  const canShoot = cursors.shift.isDown ? level.hasYellowGun : level.hasBlueGun;
+  if (!canShoot) return;
+
+  const laser_group = cursors.shift.isDown ? laser_yellow : laser_blue;
+  const laser_image = cursors.shift.isDown ? "portal_yellow" : "portal_blue";
+
+  // Shooting a laser
+  var speedX = 2 * pointer.x - robot.x;
+  var speedY = 2 * pointer.y - robot.y;
+  var norm = (speedX ** 2 + speedY ** 2) ** 0.5;
+  if (norm > 0) {
+    var laser = laser_group.create(robot.x, robot.y, laser_image);
+    laser.body.allowGravity = false;
+    laser.setVelocity(
+      (LASER_SPEED * speedX) / norm,
+      (LASER_SPEED * speedY) / norm
+    );
+  }
+};
+
 function update() {
   const vX = robot.body.velocity.x;
   if (robot.body.touching.down) {
     robot.setVelocityX(0.85 * vX);
   } else {
     robot.setVelocityX(0.99 * vX);
-  }
-
-  // Shooting a blue portal
-  if (cursors.space.isDown) {
-    var speedX = cursors.left.isDown ? -1 : cursors.right.isDown ? 1 : 0;
-    var speedY = cursors.up.isDown ? -1 : cursors.down.isDown ? 1 : 0;
-    var norm = speedX * speedX + speedY * speedY;
-    if (norm > 0 && laser_blue.children.size < 1) {
-      var laser = laser_blue.create(robot.x, robot.y, "portal_blue");
-      laser.body.allowGravity = false;
-      laser.setVelocity(
-        (LASER_SPEED * speedX) / norm,
-        (LASER_SPEED * speedY) / norm
-      );
-    }
-    return;
-  }
-
-  // Shooting a yellow portal
-  if (cursors.shift.isDown) {
-    var speedX = cursors.left.isDown ? -1 : cursors.right.isDown ? 1 : 0;
-    var speedY = cursors.up.isDown ? -1 : cursors.down.isDown ? 1 : 0;
-    var norm = speedX * speedX + speedY * speedY;
-    if (norm > 0 && laser_yellow.children.size < 1) {
-      var laser = laser_yellow.create(robot.x, robot.y, "portal_yellow");
-      laser.body.allowGravity = false;
-      laser.setVelocity(
-        (LASER_SPEED * speedX) / norm,
-        (LASER_SPEED * speedY) / norm
-      );
-    }
-    return;
   }
 
   // Moving left and right
@@ -316,6 +307,6 @@ function update() {
   // Jumping
   if (cursors.up.isDown && robot.body.touching.down) {
     robot.setVelocityY(-ROBOT_JUMP);
-    //sound_effect.play();
+    sound_effect.play();
   }
 }
