@@ -88,7 +88,7 @@ function loadLevel(level) {
   // Add static image for victory condition
   const [x, y] = level.victory.position;
   const [sX, sY] = level.victory.scale;
-  victory = that.physics.add.staticImage(x, y, "victory").setScale(sX, sY);
+  victory = that.physics.add.staticImage(x, y, "victory").setScale(sX, sY).refreshBody();
   that.physics.add.overlap(robot, victory, levelWon);
 
   // Resets the portals
