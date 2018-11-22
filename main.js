@@ -128,7 +128,7 @@ function loadLevel(level) {
 
 function levelWon() {
   currentLevel = currentLevel + 1;
-  that.scene.restart();
+  pauseWithDialog("You won!", () => that.scene.restart());
 }
 
 function create() {
@@ -149,7 +149,7 @@ function create() {
   that.input.on("pointerup", shootLaser);
 }
 
-const robotDeath = () => {
+const pauseWithDialog = (dialog, callback) => {
   that.physics.pause();
 
   graphics = that.add.graphics();
@@ -163,16 +163,14 @@ const robotDeath = () => {
     boundsAlignV: "middle"
   };
 
-  //  The Text is positioned at 0, 100
-  text = that.add.text(800, 600, "You're dead", style).setOrigin(0.5, 0.5);
+  text = that.add.text(800, 600, dialog, style).setOrigin(0.5, 0.5);
   text.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
 
-  //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
-  //text.setTextBounds(0, 100, 800, 100);
+  that.input.keyboard.on("keydown", callback);
+};
 
-  that.input.keyboard.on("keydown", function(event) {
-    that.scene.restart();
-  });
+const robotDeath = () => {
+  pauseWithDialog("You're dead", () => that.scene.restart());
 };
 
 const initCollider = () => {
