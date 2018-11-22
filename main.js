@@ -34,12 +34,6 @@ var portal_yellow;
 var laser_yellow;
 
 var blocksCollider;
-var blueLaserCollider;
-var yellowLaserCollider;
-
-var victoryOverlap;
-var bluePortalOverlap;
-var yellowPortalOverlap;
 
 var isMoving = false;
 
@@ -70,10 +64,6 @@ function loadLevel(level) {
   const [rX, rY] = level.robot_initial_position;
   robot = that.physics.add.sprite(rX, rY, "robot");
 
-  // Physic group for lasers
-  laser_blue = that.physics.add.group();
-  laser_yellow = that.physics.add.group();
-
   // Add blocks to the board
   blocks = that.physics.add.group({
     immovable: true,
@@ -93,23 +83,23 @@ function loadLevel(level) {
     });
   }
 
+  blocksCollider = that.physics.add.collider(robot, blocks);
+
+  // Add static image for victory condition
   const [x, y] = level.victory.position;
   const [sX, sY] = level.victory.scale;
   victory = that.physics.add.staticImage(x, y, "victory").setScale(sX, sY);
+  that.physics.add.overlap(robot, victory, levelWon);
 
-  victoryOverlap = that.physics.add.overlap(robot, victory, levelWon);
-  blueLaserCollider = that.physics.add.collider(
-    laser_blue,
-    blocks,
-    makePortal("blue")
-  );
-  yellowLaserCollider = that.physics.add.collider(
-    laser_yellow,
-    blocks,
-    makePortal("yellow")
-  );
+  // Resets the portals
+  portal_blue = null;
+  portal_yellow = null;
 
-  blocksCollider = that.physics.add.collider(robot, blocks);
+  // Physic group for lasers
+  laser_blue = that.physics.add.group();
+  laser_yellow = that.physics.add.group();
+  that.physics.add.collider(laser_blue, blocks, makePortal("blue"));
+  that.physics.add.collider(laser_yellow, blocks, makePortal("yellow"));
 }
 
 function levelWon() {
@@ -147,11 +137,7 @@ const makePortal = color => (laser, block) => {
     "portal_" + color
   );
   new_portal.alpha = 0.8;
-  new_overlap = that.physics.add.overlap(
-    robot,
-    new_portal,
-    teleportTo(otherColor)
-  );
+  that.physics.add.overlap(robot, new_portal, teleportTo(otherColor));
 
   if (laser.body.touching.right) {
     new_portal._DIRECTION = "LEFT";
@@ -172,17 +158,13 @@ const makePortal = color => (laser, block) => {
   if (color == "blue") {
     if (portal_blue) {
       portal_blue.destroy();
-      bluePortalOverlap.destroy();
     }
     portal_blue = new_portal;
-    bluePortalOverlap = new_overlap;
   } else {
     if (portal_yellow) {
       portal_yellow.destroy();
-      yellowPortalOverlap.destroy();
     }
     portal_yellow = new_portal;
-    yellowPortalOverlap = new_overlap;
   }
   laser.destroy();
   initCollider();
