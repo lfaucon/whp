@@ -1,5 +1,3 @@
-console.log(levels[0]);
-
 var config = {
   type: Phaser.AUTO,
   width: 800,
@@ -24,21 +22,25 @@ var ROBOT_SPEED = 250;
 var ROBOT_JUMP = 500;
 var LASER_SPEED = 3000;
 
+var currentLevel = 0;
+
 var cursors;
 var robot;
 var blocks;
 var killers;
+var victory;
 var portal_blue;
 var laser_blue;
 var portal_yellow;
 var laser_yellow;
+
+var blocksCollider;
 
 var isMoving = false;
 
 var sound_effect;
 
 var game = new Phaser.Game(config);
-var collider;
 
 function preload() {
   that = this;
@@ -52,22 +54,41 @@ function preload() {
 
   this.load.image("robot", "assets/50x50-pink.png");
 
+  this.load.image("victory", "assets/12x12-green.png");
+
   this.load.image("portal_blue", "assets/12x12-blue.png");
   this.load.image("portal_yellow", "assets/12x12-yellow.png");
 }
 
 function loadLevel(level) {
+  if (!level) return;
+
   // Add the sprite for the robot
   const [rX, rY] = level.robot_initial_position;
   robot = that.physics.add.sprite(rX, rY, "robot");
 
-  // Add blocks
-  level.blocks.forEach(block => {
-    const [bX, bY] = block.position;
-    const [sX, sY] = block.scale;
-    blocks.create(bX, bY, "block_black").setScale(sX, sY);
+  // Add blocks to the board
+  blocks = that.physics.add.group({
+    immovable: true,
+    allowGravity: false
   });
 
+  blocks.create(-25, 600, "block_white").setScale(1, 24);
+  blocks.create(1625, 600, "block_white").setScale(1, 24);
+  blocks.create(800, -25, "block_white").setScale(32, 1);
+  blocks.create(800, 1225, "block_white").setScale(32, 1);
+
+  if (level.blocks) {
+    level.blocks.forEach(block => {
+      const [x, y] = block.position;
+      const [sX, sY] = block.scale;
+      blocks.create(x, y, "block_black").setScale(sX, sY);
+    });
+  }
+
+  blocksCollider = that.physics.add.collider(robot, blocks);
+
+  // Killers
   for (i = 0; i < 4; i++) {
     b1 = killers
       .create(300 + 150 * i, 300 + 100 * i, "block_red")
@@ -82,6 +103,30 @@ function loadLevel(level) {
     b2.setVelocityX(-600);
     b2.body.bounce.set(1);
   }
+
+  // Add static image for victory condition
+  const [x, y] = level.victory.position;
+  const [sX, sY] = level.victory.scale;
+  victory = that.physics.add
+    .staticImage(x, y, "victory")
+    .setScale(sX, sY)
+    .refreshBody();
+  that.physics.add.overlap(robot, victory, levelWon);
+
+  // Resets the portals
+  portal_blue = null;
+  portal_yellow = null;
+
+  // Physic group for lasers
+  laser_blue = that.physics.add.group();
+  laser_yellow = that.physics.add.group();
+  that.physics.add.collider(laser_blue, blocks, makePortal("blue"));
+  that.physics.add.collider(laser_yellow, blocks, makePortal("yellow"));
+}
+
+function levelWon() {
+  currentLevel = currentLevel + 1;
+  that.scene.restart();
 }
 
 function create() {
@@ -98,35 +143,7 @@ function create() {
   // Camera :)
   this.cameras.main.setZoom(0.5);
 
-  // Physic group for lasers
-  laser_blue = this.physics.add.group();
-  laser_yellow = this.physics.add.group();
-
-  // Add blocks to the board
-  blocks = this.physics.add.group({
-    immovable: true,
-    allowGravity: false
-  });
-
-  killers = this.physics.add.group({
-    immovable: false,
-    allowGravity: false
-  });
-
-  blocks.create(-25, 600, "block_white").setScale(1, 24);
-  blocks.create(1625, 600, "block_white").setScale(1, 24);
-  blocks.create(800, -25, "block_white").setScale(32, 1);
-  blocks.create(800, 1225, "block_white").setScale(32, 1);
-
-  loadLevel(levels[0]);
-
-  this.physics.add.collider(laser_blue, blocks, makePortal("blue"));
-  this.physics.add.collider(laser_yellow, blocks, makePortal("yellow"));
-  that.physics.add.collider(killers, blocks);
-
-  that.physics.add.collider(killers, robot, robotDeath);
-
-  initCollider();
+  loadLevel(levels[currentLevel]);
 }
 
 const robotDeath = () => {
@@ -156,10 +173,8 @@ const robotDeath = () => {
 };
 
 const initCollider = () => {
-  if (collider) {
-    collider.destroy();
-  }
-  collider = that.physics.add.collider(robot, blocks);
+  if (blocksCollider) blocksCollider.destroy();
+  blocksCollider = that.physics.add.collider(robot, blocks);
 };
 
 const makePortal = color => (laser, block) => {
@@ -170,7 +185,6 @@ const makePortal = color => (laser, block) => {
     "portal_" + color
   );
   new_portal.alpha = 0.8;
-
   that.physics.add.overlap(robot, new_portal, teleportTo(otherColor));
 
   if (laser.body.touching.right) {
