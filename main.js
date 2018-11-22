@@ -27,6 +27,7 @@ var currentLevel = 0;
 var cursors;
 var robot;
 var blocks;
+var killers;
 var victory;
 var portal_blue;
 var laser_blue;
@@ -49,6 +50,8 @@ function preload() {
 
   this.load.image("block_white", "assets/50x50-white.png");
   this.load.image("block_black", "assets/50x50-black.png");
+  //this.load.image("block_red", "assets/50x50-red.png");
+
   this.load.image("robot", "assets/50x50-pink.png");
 
   this.load.image("victory", "assets/12x12-green.png");
@@ -85,10 +88,36 @@ function loadLevel(level) {
 
   blocksCollider = that.physics.add.collider(robot, blocks);
 
+  // Killers
+  killers = that.physics.add.group({
+    immovable: false,
+    allowGravity: false
+  });
+
+  for (i = 0; i < 4; i++) {
+    b1 = killers
+      .create(300 + 150 * i, 300 + 100 * i, "block_red")
+      .setScale(1, 1);
+    b2 = killers
+      .create(800 - 150 * i, 300 + 100 * i + 50, "block_red")
+      .setScale(1, 1);
+
+    b1.setVelocityX(600);
+    b1.body.bounce.set(1);
+
+    b2.setVelocityX(-600);
+    b2.body.bounce.set(1);
+  }
+  that.physics.add.collider(killers, blocks);
+  that.physics.add.collider(killers, robot, robotDeath);
+
   // Add static image for victory condition
   const [x, y] = level.victory.position;
   const [sX, sY] = level.victory.scale;
-  victory = that.physics.add.staticImage(x, y, "victory").setScale(sX, sY).refreshBody();
+  victory = that.physics.add
+    .staticImage(x, y, "victory")
+    .setScale(sX, sY)
+    .refreshBody();
   that.physics.add.overlap(robot, victory, levelWon);
 
   // Resets the portals
@@ -123,6 +152,32 @@ function create() {
 
   loadLevel(levels[currentLevel]);
 }
+
+const robotDeath = () => {
+  that.physics.pause();
+
+  graphics = that.add.graphics();
+  graphics.fillStyle(0xffff00, 0.2);
+  graphics.fillRect(0, 0, 1600, 1200);
+
+  var style = {
+    font: "bold 164px Arial",
+    fill: "#fff",
+    boundsAlignH: "center",
+    boundsAlignV: "middle"
+  };
+
+  //  The Text is positioned at 0, 100
+  text = that.add.text(800, 600, "You're dead", style).setOrigin(0.5, 0.5);
+  text.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
+
+  //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
+  //text.setTextBounds(0, 100, 800, 100);
+
+  that.input.keyboard.on("keydown", function(event) {
+    that.scene.restart();
+  });
+};
 
 const initCollider = () => {
   if (blocksCollider) blocksCollider.destroy();
@@ -267,9 +322,5 @@ function update() {
   if (cursors.up.isDown && robot.body.touching.down) {
     robot.setVelocityY(-ROBOT_JUMP);
     //sound_effect.play();
-  }
-
-  // Going down faster
-  if (cursors.down.isDown) {
   }
 }
