@@ -18,7 +18,7 @@ var config = {
 
 var that;
 
-var ROBOT_SPEED = 250;
+var ROBOT_SPEED = 400;
 var ROBOT_JUMP = 500;
 var LASER_SPEED = 3000;
 
@@ -50,7 +50,7 @@ function preload() {
 
   this.load.image("block_white", "assets/50x50-white.png");
   this.load.image("block_black", "assets/50x50-black.png");
-  //this.load.image("block_red", "assets/50x50-red.png");
+  this.load.image("block_red", "assets/24x24-red.png");
 
   this.load.image("robot", "assets/50x50-pink.png");
 
@@ -94,19 +94,14 @@ function loadLevel(level) {
     allowGravity: false
   });
 
-  for (i = 0; i < 4; i++) {
-    b1 = killers
-      .create(300 + 150 * i, 300 + 100 * i, "block_red")
-      .setScale(1, 1);
-    b2 = killers
-      .create(800 - 150 * i, 300 + 100 * i + 50, "block_red")
-      .setScale(1, 1);
-
-    b1.setVelocityX(600);
-    b1.body.bounce.set(1);
-
-    b2.setVelocityX(-600);
-    b2.body.bounce.set(1);
+  if (level.killers) {
+    level.killers.forEach(killer => {
+      const [x, y] = killer.position;
+      const [vX, vY] = killer.speed;
+      const k = killers.create(x, y, "block_red");
+      k.setVelocity(vX, vY);
+      k.setBounce(1);
+    });
   }
   that.physics.add.collider(killers, blocks);
   that.physics.add.collider(killers, robot, robotDeath);
@@ -276,7 +271,7 @@ function update() {
   if (robot.body.touching.down) {
     robot.setVelocityX(0.85 * vX);
   } else {
-    robot.setVelocityX(1 * vX);
+    robot.setVelocityX(0.99 * vX);
   }
 
   // Shooting a blue portal
@@ -313,9 +308,9 @@ function update() {
 
   // Moving left and right
   if (cursors.left.isDown) {
-    robot.setVelocityX(-ROBOT_SPEED);
+    robot.setVelocityX(Math.max(-ROBOT_SPEED, robot.body.velocity.x - 50));
   } else if (cursors.right.isDown) {
-    robot.setVelocityX(ROBOT_SPEED);
+    robot.setVelocityX(Math.min(ROBOT_SPEED, robot.body.velocity.x + 50));
   }
 
   // Jumping
