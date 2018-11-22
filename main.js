@@ -89,6 +89,11 @@ function loadLevel(level) {
   blocksCollider = that.physics.add.collider(robot, blocks);
 
   // Killers
+  killers = that.physics.add.group({
+    immovable: false,
+    allowGravity: false
+  });
+
   for (i = 0; i < 4; i++) {
     b1 = killers
       .create(300 + 150 * i, 300 + 100 * i, "block_red")
@@ -103,6 +108,8 @@ function loadLevel(level) {
     b2.setVelocityX(-600);
     b2.body.bounce.set(1);
   }
+  that.physics.add.collider(killers, blocks);
+  that.physics.add.collider(killers, robot, robotDeath);
 
   // Add static image for victory condition
   const [x, y] = level.victory.position;
