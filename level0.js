@@ -1,8 +1,12 @@
 levels.push({
-  robot_initial_position: [75, 800],
+  robot: {
+    position: [75, 600],
+    hasBlueGun: false,
+    hasYellowGun: false
+  },
   blocks: [
-    { position: [250, 1000], scale: [10, 3] },
-    { position: [1000, 1000], scale: [10, 3] }
+    { position: [250, 800], scale: [10, 3] },
+    { position: [1000, 800], scale: [10, 3] }
   ],
   killers: [
     { position: [50, 1150], speed: [0, 0] },
@@ -37,5 +41,5 @@ levels.push({
     { position: [1500, 1150], speed: [0, 0] },
     { position: [1550, 1150], speed: [0, 0] }
   ],
-  victory: { position: [1300, 800], scale: [1, 14] }
+  victory: { position: [1300, 600], scale: [1, 14] }
 });
