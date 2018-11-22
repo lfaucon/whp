@@ -27,7 +27,7 @@ var LASER_SPEED = 3000;
 var cursors;
 var robot;
 var blocks;
-var dangerous_blocks;
+var killers;
 var portal_blue;
 var laser_blue;
 var portal_yellow;
@@ -68,10 +68,13 @@ function loadLevel(level) {
     blocks.create(bX, bY, "block_black").setScale(sX, sY);
   });
 
-
-  for(i=0; i<4; i++){
-    b1 = dangerous_blocks.create(300+150*i, 300+100*i, "block_red").setScale(1, 1);
-    b2 = dangerous_blocks.create(800-150*i, 300+100*i+50, "block_red").setScale(1, 1);
+  for (i = 0; i < 4; i++) {
+    b1 = killers
+      .create(300 + 150 * i, 300 + 100 * i, "block_red")
+      .setScale(1, 1);
+    b2 = killers
+      .create(800 - 150 * i, 300 + 100 * i + 50, "block_red")
+      .setScale(1, 1);
 
     b1.setVelocityX(600);
     b1.body.bounce.set(1);
@@ -79,7 +82,6 @@ function loadLevel(level) {
     b2.setVelocityX(-600);
     b2.body.bounce.set(1);
   }
-
 }
 
 function create() {
@@ -106,11 +108,10 @@ function create() {
     allowGravity: false
   });
 
-  dangerous_blocks = this.physics.add.group({
+  killers = this.physics.add.group({
     immovable: false,
     allowGravity: false
   });
-
 
   blocks.create(-25, 600, "block_white").setScale(1, 24);
   blocks.create(1625, 600, "block_white").setScale(1, 24);
@@ -121,48 +122,38 @@ function create() {
 
   this.physics.add.collider(laser_blue, blocks, makePortal("blue"));
   this.physics.add.collider(laser_yellow, blocks, makePortal("yellow"));
-  that.physics.add.collider(dangerous_blocks, blocks);
+  that.physics.add.collider(killers, blocks);
 
-  that.physics.add.collider(dangerous_blocks, robot, robotDeath);
-
+  that.physics.add.collider(killers, robot, robotDeath);
 
   initCollider();
 }
 
-
-
-
-
 const robotDeath = () => {
-  console.log("death!!")
-
   that.physics.pause();
 
-  /*
-    var bar = that.add.graphics();
-    //bar.beginFill(0x000000, 0.2);
-    bar.drawRect(0, 100, 800, 100);
-*/
-    graphics = that.add.graphics();
+  graphics = that.add.graphics();
+  graphics.fillStyle(0xffff00, 0.2);
+  graphics.fillRect(0, 0, 1600, 1200);
 
-    graphics.fillStyle(0xffff00, 0.2);
-    graphics.fillRect(0, 0, 1600, 1200)
+  var style = {
+    font: "bold 164px Arial",
+    fill: "#fff",
+    boundsAlignH: "center",
+    boundsAlignV: "middle"
+  };
 
+  //  The Text is positioned at 0, 100
+  text = that.add.text(800, 600, "You're dead", style).setOrigin(0.5, 0.5);
+  text.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
 
-    var style = { font: "bold 164px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
-  
-    //  The Text is positioned at 0, 100
-    text = that.add.text(800, 600, "You're dead", style).setOrigin(0.5, 0.5);
-    text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+  //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
+  //text.setTextBounds(0, 100, 800, 100);
 
-    //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
-    //text.setTextBounds(0, 100, 800, 100);
-
-    that.input.keyboard.on('keydown', function (event) { 
-      that.scene.restart();
-    });
-}
-
+  that.input.keyboard.on("keydown", function(event) {
+    that.scene.restart();
+  });
+};
 
 const initCollider = () => {
   if (collider) {
@@ -310,9 +301,5 @@ function update() {
   if (cursors.up.isDown && robot.body.touching.down) {
     robot.setVelocityY(-ROBOT_JUMP);
     //sound_effect.play();
-  }
-
-  // Going down faster
-  if (cursors.down.isDown) {
   }
 }
