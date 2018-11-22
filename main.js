@@ -5,7 +5,7 @@ var config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 1000 }
+      gravity: { y: 1250 }
     }
   },
   scene: {
@@ -19,7 +19,7 @@ var config = {
 var that;
 
 var ROBOT_SPEED = 400;
-var ROBOT_JUMP = 500;
+var ROBOT_JUMP = 600;
 var LASER_SPEED = 3000;
 
 var currentLevel = 0;
@@ -290,18 +290,18 @@ const shootLaser = pointer => {
 };
 
 function update() {
-  const vX = robot.body.velocity.x;
+  const v = robot.body.velocity.x;
   if (robot.body.touching.down) {
-    robot.setVelocityX(0.85 * vX);
+    robot.setVelocityX(0.85 * v);
   } else {
-    robot.setVelocityX(0.99 * vX);
+    robot.setVelocityX(1 * v);
   }
 
   // Moving left and right
   if (cursors.left.isDown) {
-    robot.setVelocityX(Math.max(-ROBOT_SPEED, robot.body.velocity.x - 50));
+    robot.setVelocityX(v < -ROBOT_SPEED ? v : Math.max(-ROBOT_SPEED, v - 50));
   } else if (cursors.right.isDown) {
-    robot.setVelocityX(Math.min(ROBOT_SPEED, robot.body.velocity.x + 50));
+    robot.setVelocityX(v > ROBOT_SPEED ? v : Math.min(ROBOT_SPEED, v + 50));
   }
 
   // Jumping
