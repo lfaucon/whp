@@ -24,6 +24,10 @@ var LASER_SPEED = 3000;
 var MAX_ROBOT_SPEED = 2500;
 
 var currentLevel = 0;
+var currentDeathRate = 0;
+
+var gladosBlink;
+var isPaused = false;
 
 var cursors;
 var robot;
@@ -54,6 +58,7 @@ function preload() {
   this.load.image("block_red", "assets/24x24-red.png");
 
   this.load.image("robot", "assets/50x50-pink.png");
+  this.load.image("glados", "assets/glados.png");
 
   this.load.image("victory", "assets/12x12-green.png");
 
@@ -62,6 +67,7 @@ function preload() {
 }
 
 function loadLevel(level) {
+  isPaused = false;
   if (!level) return;
 
   // Add the sprite for the robot
@@ -132,8 +138,37 @@ function levelWon() {
   pauseWithDialog("You won!", () => that.scene.restart());
 }
 
+
+function displayHud(){
+  graphics = that.add.graphics();
+  graphics.fillStyle(0x000e54, 1.0);
+  graphics.fillRoundedRect(0, -100, 1600, 100, { tl: 0, tr: 0, bl: 0, br: 0 });
+
+  var style = {
+    font: "bold 64px Arial",
+    fill: "#fff",
+    boundsAlignH: "center",
+    boundsAlignV: "middle"
+  };
+
+  textHudLevel = that.add.text(20, -80, "Level: "+currentLevel, style).setOrigin(0., 0);
+  textHudLevel.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
+
+  textHudDeath = that.add.text(1580, -80, "Death: "+currentDeathRate, style).setOrigin(1., 0);
+  textHudDeath.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
+
+  glados = that.add.sprite(1600/2, -98, 'glados');
+  glados.setOrigin(0.5, 0)
+  glados.setScale(0.8);
+
+  gladosBlink = that.add.graphics();
+  gladosBlink.fillStyle(0x222222, 1.0);
+  gladosBlink.fillCircle(1600/2-2, -38, 8, 8);
+
+}
+
 function create() {
-  this.cameras.main.setBounds(0, 0, 1600, 1200);
+  this.cameras.main.setBounds(0, -100, 1600, 1400);
   this.physics.world.setBounds(0, 0, 1600, 1200);
 
   // Register the keyboard for receiving inputs
@@ -146,12 +181,18 @@ function create() {
   // Camera :)
   this.cameras.main.setZoom(0.5);
 
+  // Level
   loadLevel(levels[currentLevel]);
   that.input.on("pointerup", shootLaser);
+
+  // Hud
+  displayHud();
+
 }
 
 const pauseWithDialog = (dialog, callback) => {
   that.physics.pause();
+  isPaused = true;
 
   graphics = that.add.graphics();
   graphics.fillStyle(0xffff00, 0.2);
@@ -164,13 +205,14 @@ const pauseWithDialog = (dialog, callback) => {
     boundsAlignV: "middle"
   };
 
-  text = that.add.text(800, 600, dialog, style).setOrigin(0.5, 0.5);
+  text = that.add.text(800, 500, dialog, style).setOrigin(0.5, 0.5);
   text.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
 
   that.input.keyboard.on("keydown", callback);
 };
 
 const robotDeath = () => {
+  currentDeathRate += 1;
   pauseWithDialog("You're dead", () => that.scene.restart());
 };
 
@@ -288,7 +330,10 @@ const shootLaser = pointer => {
   }
 };
 
-function update() {
+function update(time, delta) {
+  gladosBlink.setAlpha((isPaused) ? 0 : Math.cos(time/200.));
+
+  //console.log(delta);
   const v = robot.body.velocity.x;
   if (robot.body.touching.down) {
     robot.setVelocityX(0.85 * v);

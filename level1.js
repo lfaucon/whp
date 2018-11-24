@@ -1,22 +1,22 @@
 levels.push({
   robot: {
-    position: [50, 800],
+    position: [50, 700],
     hasBlueGun: false,
     hasYellowGun: false
   },
   blocks: [
-    { position: [800, 1000], scale: [50, 5] },
-    { position: [800, 400], scale: [50, 5] }
+    { position: [800, 900], scale: [50, 5] },
+    { position: [800, 300], scale: [50, 5] }
   ],
   killers: [
-    { position: [1200, 850], speed: [-250, 0] },
-    { position: [1200, 800], speed: [-250, 0] },
-    { position: [1200, 600], speed: [-250, 0] },
-    { position: [1200, 550], speed: [-250, 0] },
-    { position: [1500, 850], speed: [250, 0] },
-    { position: [1500, 800], speed: [250, 0] },
-    { position: [1500, 600], speed: [250, 0] },
-    { position: [1500, 550], speed: [250, 0] }
+    { position: [1200, 750], speed: [-250, 0] },
+    { position: [1200, 700], speed: [-250, 0] },
+    { position: [1200, 500], speed: [-250, 0] },
+    { position: [1200, 450], speed: [-250, 0] },
+    { position: [1500, 750], speed: [250, 0] },
+    { position: [1500, 700], speed: [250, 0] },
+    { position: [1500, 500], speed: [250, 0] },
+    { position: [1500, 450], speed: [250, 0] }
   ],
-  victory: { position: [1500, 700], scale: [1, 28] }
+  victory: { position: [1500, 600], scale: [1, 28] }
 });
