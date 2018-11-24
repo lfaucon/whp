@@ -5,7 +5,7 @@ var config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 1250 }
+      gravity: { y: 1200 }
     }
   },
   scene: {
@@ -21,6 +21,7 @@ var that;
 var ROBOT_SPEED = 400;
 var ROBOT_JUMP = 600;
 var LASER_SPEED = 3000;
+var MAX_ROBOT_SPEED = 2500;
 
 var currentLevel = 0;
 
@@ -248,8 +249,8 @@ const teleportTo = color => () => {
     LEFT: _vY
   }[portalFrom._DIRECTION];
 
-  vA = Math.max(120, Math.min(1500, Math.abs(vA)));
-  vO = Math.min(3000, vO);
+  vA = Math.max(120, Math.min(MAX_ROBOT_SPEED, Math.abs(vA)));
+  vO = Math.min(MAX_ROBOT_SPEED, vO);
 
   robot.body.x = portalTo.x + dX - 25;
   robot.body.y = portalTo.y + dY - 25;
