@@ -318,7 +318,7 @@ const shootLaser = pointer => {
 
   // Shooting a laser
   var speedX = 2 * pointer.x - robot.x;
-  var speedY = 2 * pointer.y - robot.y;
+  var speedY = 2 * pointer.y - (robot.y+100);
   var norm = (speedX ** 2 + speedY ** 2) ** 0.5;
   if (norm > 0) {
     var laser = laser_group.create(robot.x, robot.y, laser_image);
