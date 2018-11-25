@@ -159,8 +159,7 @@ function levelWon() {
   pauseWithDialog("You won!", () => that.scene.restart());
 }
 
-
-function displayHud(){
+function displayHud() {
   graphics = that.add.graphics();
   graphics.fillStyle(0x000e54, 1.0);
   graphics.fillRoundedRect(0, -100, 1600, 100, { tl: 0, tr: 0, bl: 0, br: 0 });
@@ -172,20 +171,23 @@ function displayHud(){
     boundsAlignV: "middle"
   };
 
-  textHudLevel = that.add.text(20, -80, "Level: "+currentLevel, style).setOrigin(0., 0);
+  textHudLevel = that.add
+    .text(20, -80, "Level: " + currentLevel, style)
+    .setOrigin(0, 0);
   textHudLevel.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
 
-  textHudDeath = that.add.text(1580, -80, "Death: "+currentDeathRate, style).setOrigin(1., 0);
+  textHudDeath = that.add
+    .text(1580, -80, "Death: " + currentDeathRate, style)
+    .setOrigin(1, 0);
   textHudDeath.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
 
-  glados = that.add.sprite(1600/2, -98, 'glados');
-  glados.setOrigin(0.5, 0)
+  glados = that.add.sprite(1600 / 2, -98, "glados");
+  glados.setOrigin(0.5, 0);
   glados.setScale(0.8);
 
   gladosBlink = that.add.graphics();
   gladosBlink.fillStyle(0x222222, 1.0);
-  gladosBlink.fillCircle(1600/2-2, -38, 8, 8);
-
+  gladosBlink.fillCircle(1600 / 2 - 2, -38, 8, 8);
 }
 
 function create() {
@@ -208,7 +210,6 @@ function create() {
 
   // Hud
   displayHud();
-
 }
 
 const pauseWithDialog = (dialog, callback) => {
@@ -292,7 +293,7 @@ const teleportTo = color => (_, item) => {
   var portalFrom = { blue: portal_yellow, yellow: portal_blue }[color];
 
   if (!portalTo) {
-    return;
+    portalTo = portalFrom;
   }
 
   dX = { UP: 0, DOWN: 0, LEFT: -32, RIGHT: 32 }[portalTo._DIRECTION];
@@ -352,7 +353,7 @@ const shootLaser = pointer => {
 };
 
 function update(time, delta) {
-  gladosBlink.setAlpha((isPaused) ? 0 : Math.cos(time/200.));
+  gladosBlink.setAlpha(isPaused ? 0 : Math.cos(time / 200));
 
   //console.log(delta);
   const v = robot.body.velocity.x;
