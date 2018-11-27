@@ -88,7 +88,7 @@ function loadLevel(level) {
   blocks.create(-25, 600, "block_white").setScale(1, 26);
   blocks.create(1625, 600, "block_white").setScale(1, 26);
   blocks.create(800, -25, "block_white").setScale(32, 1);
-  blocks.create(800, 1225, "block_white").setScale(32, 1);
+  blocks.create(800, 1125, "block_white").setScale(32, 1);
 
   if (level.blocks) {
     level.blocks.forEach(block => {
