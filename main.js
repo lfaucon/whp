@@ -33,6 +33,7 @@ var cursors;
 var robot;
 var blocks;
 var killers;
+var reverser;
 var victory;
 var portal_blue;
 var laser_blue;
@@ -64,6 +65,8 @@ function preload() {
 
   this.load.image("portal_blue", "assets/12x12-blue.png");
   this.load.image("portal_yellow", "assets/12x12-yellow.png");
+
+  this.load.image("reverser", "assets/12x12-check.png");
 }
 
 function loadLevel(level) {
@@ -95,6 +98,20 @@ function loadLevel(level) {
 
   blocksCollider = that.physics.add.collider(robot, blocks);
 
+  // Gravity Reverser
+  reverser = that.physics.add.group({
+    immovable: true,
+    allowGravity: false
+  });
+
+
+  if (level.reversers) {
+    level.reversers.forEach(block => {
+      const [x, y] = block.position;
+      reverser.create(x, y, "reverser").setScale(2,1);
+    })
+  }
+
   // Killers
   killers = that.physics.add.group({
     immovable: false,
@@ -112,6 +129,9 @@ function loadLevel(level) {
   }
   that.physics.add.collider(killers, blocks);
   that.physics.add.collider(killers, robot, robotDeath);
+  that.physics.add.collider(reverser, robot, x => {
+      that.physics.world.gravity.y *= -1;
+  });
 
   // Add static image for victory condition
   const [x, y] = level.victory.position;
@@ -333,9 +353,13 @@ const shootLaser = pointer => {
 function update(time, delta) {
   gladosBlink.setAlpha((isPaused) ? 0 : Math.cos(time/200.));
 
-  //console.log(delta);
   const v = robot.body.velocity.x;
-  if (robot.body.touching.down) {
+  const gSign = (that.physics.world.gravity.y<0)?1:-1;
+
+  const onTheGround = (robot.body.touching.down && gSign<0) 
+                   || (robot.body.touching.up && gSign>0);
+
+  if (onTheGround) {
     robot.setVelocityX(0.85 * v);
   } else {
     robot.setVelocityX(1 * v);
@@ -349,8 +373,8 @@ function update(time, delta) {
   }
 
   // Jumping
-  if (cursors.up.isDown && robot.body.touching.down) {
-    robot.setVelocityY(-ROBOT_JUMP);
+  if (cursors.up.isDown && onTheGround) {
+    robot.setVelocityY(gSign*ROBOT_JUMP);
     sound_effect.play();
   }
 }
