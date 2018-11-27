@@ -20,7 +20,7 @@ var that;
 
 var ROBOT_SPEED = 400;
 var ROBOT_JUMP = 600;
-var LASER_SPEED = 3000;
+var LASER_SPEED = 3500;
 var MAX_ROBOT_SPEED = 2500;
 
 var currentLevel = 0;
@@ -83,8 +83,8 @@ function loadLevel(level) {
     allowGravity: false
   });
 
-  blocks.create(-25, 600, "block_white").setScale(1, 24);
-  blocks.create(1625, 600, "block_white").setScale(1, 24);
+  blocks.create(-25, 600, "block_white").setScale(1, 26);
+  blocks.create(1625, 600, "block_white").setScale(1, 26);
   blocks.create(800, -25, "block_white").setScale(32, 1);
   blocks.create(800, 1225, "block_white").setScale(32, 1);
 
@@ -144,13 +144,34 @@ function loadLevel(level) {
 
   // Resets the portals
   portal_blue = null;
+  if (level.portal_blue) {
+    const [x, y] = level.portal_blue.position;
+    const [sX, sY] = level.portal_blue.scale;
+    portal_blue = that.physics.add
+      .staticImage(x, y, "portal_blue")
+      .setScale(sX, sY)
+      .refreshBody();
+    portal_blue._DIRECTION = level.portal_blue.direction;
+    that.physics.add.overlap(portal_blue, robot, teleportTo("yellow"));
+  }
   portal_yellow = null;
+  if (level.portal_yellow) {
+    const [x, y] = level.portal_yellow.position;
+    const [sX, sY] = level.portal_yellow.scale;
+    portal_yellow = that.physics.add
+      .staticImage(x, y, "portal_yellow")
+      .setScale(sX, sY)
+      .refreshBody();
+    portal_yellow._DIRECTION = level.portal_yellow.direction;
+    that.physics.add.overlap(portal_yellow, robot, teleportTo("blue"));
+  }
 
   // Physic group for lasers
   laser_blue = that.physics.add.group();
   laser_yellow = that.physics.add.group();
   that.physics.add.collider(laser_blue, blocks, makePortal("blue"));
   that.physics.add.collider(laser_yellow, blocks, makePortal("yellow"));
+  initCollider();
 }
 
 function levelWon() {
@@ -158,8 +179,7 @@ function levelWon() {
   pauseWithDialog("You won!", () => that.scene.restart());
 }
 
-
-function displayHud(){
+function displayHud() {
   graphics = that.add.graphics();
   graphics.fillStyle(0x000e54, 1.0);
   graphics.fillRoundedRect(0, -100, 1600, 100, { tl: 0, tr: 0, bl: 0, br: 0 });
@@ -171,20 +191,23 @@ function displayHud(){
     boundsAlignV: "middle"
   };
 
-  textHudLevel = that.add.text(20, -80, "Level: "+currentLevel, style).setOrigin(0., 0);
+  textHudLevel = that.add
+    .text(20, -80, "Level: " + currentLevel, style)
+    .setOrigin(0, 0);
   textHudLevel.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
 
-  textHudDeath = that.add.text(1580, -80, "Death: "+currentDeathRate, style).setOrigin(1., 0);
+  textHudDeath = that.add
+    .text(1580, -80, "Death: " + currentDeathRate, style)
+    .setOrigin(1, 0);
   textHudDeath.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
 
-  glados = that.add.sprite(1600/2, -98, 'glados');
-  glados.setOrigin(0.5, 0)
+  glados = that.add.sprite(1600 / 2, -98, "glados");
+  glados.setOrigin(0.5, 0);
   glados.setScale(0.8);
 
   gladosBlink = that.add.graphics();
   gladosBlink.fillStyle(0x222222, 1.0);
-  gladosBlink.fillCircle(1600/2-2, -38, 8, 8);
-
+  gladosBlink.fillCircle(1600 / 2 - 2, -38, 8, 8);
 }
 
 function create() {
@@ -207,7 +230,6 @@ function create() {
 
   // Hud
   displayHud();
-
 }
 
 const pauseWithDialog = (dialog, callback) => {
@@ -241,15 +263,15 @@ const initCollider = () => {
   blocksCollider = that.physics.add.collider(robot, blocks);
 };
 
-const makePortal = color => (laser, block) => {
+const makePortal = color => laser => {
   const otherColor = color == "blue" ? "yellow" : "blue";
   var new_portal = that.physics.add.staticImage(
     laser.x,
     laser.y,
     "portal_" + color
   );
-  new_portal.alpha = 0.8;
-  that.physics.add.overlap(robot, new_portal, teleportTo(otherColor));
+  that.physics.add.overlap(new_portal, robot, teleportTo(otherColor));
+  //that.physics.add.overlap(new_portal, killers, teleportTo(otherColor));
 
   if (laser.body.touching.right) {
     new_portal._DIRECTION = "LEFT";
@@ -282,13 +304,13 @@ const makePortal = color => (laser, block) => {
   initCollider();
 };
 
-const teleportTo = color => () => {
+const teleportTo = color => (_, item) => {
   var vX, vY, dX, dY;
-  const _vX = robot.body.velocity.x;
-  const _vY = robot.body.velocity.y;
+  const _vX = item.body.velocity.x;
+  const _vY = item.body.velocity.y;
 
   var portalTo = { blue: portal_blue, yellow: portal_yellow }[color];
-  var portalFrom = { yellow: portal_blue, blue: portal_yellow }[color];
+  var portalFrom = { blue: portal_yellow, yellow: portal_blue }[color];
 
   if (!portalTo) {
     portalTo = portalFrom;
@@ -314,17 +336,17 @@ const teleportTo = color => () => {
   vA = Math.max(120, Math.min(MAX_ROBOT_SPEED, Math.abs(vA)));
   vO = Math.min(MAX_ROBOT_SPEED, vO);
 
-  robot.body.x = portalTo.x + dX - 25;
-  robot.body.y = portalTo.y + dY - 25;
+  item.body.x = portalTo.x + dX - 25;
+  item.body.y = portalTo.y + dY - 25;
 
   if (portalTo._DIRECTION == "UP") {
-    robot.setVelocity(vO, -vA);
+    item.setVelocity(vO, -vA);
   } else if (portalTo._DIRECTION == "DOWN") {
-    robot.setVelocity(-vO, vA);
+    item.setVelocity(-vO, vA);
   } else if (portalTo._DIRECTION == "RIGHT") {
-    robot.setVelocity(vA, -vO);
+    item.setVelocity(vA, -vO);
   } else if (portalTo._DIRECTION == "LEFT") {
-    robot.setVelocity(-vA, vO);
+    item.setVelocity(-vA, vO);
   }
 };
 
@@ -351,7 +373,7 @@ const shootLaser = pointer => {
 };
 
 function update(time, delta) {
-  gladosBlink.setAlpha((isPaused) ? 0 : Math.cos(time/200.));
+  gladosBlink.setAlpha(isPaused ? 0 : Math.cos(time / 200));
 
   const v = robot.body.velocity.x;
   const gSign = (that.physics.world.gravity.y<0)?1:-1;
