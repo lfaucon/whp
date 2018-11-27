@@ -5,6 +5,7 @@ levels.push({
     hasYellowGun: false
   },
   blocks: [
+    { position: [0, 0], scale: [100, 3] },
     { position: [250, 800], scale: [10, 3] },
     { position: [1000, 800], scale: [10, 3] }
   ],
@@ -40,6 +41,10 @@ levels.push({
     { position: [1450, 1150], speed: [0, 0] },
     { position: [1500, 1150], speed: [0, 0] },
     { position: [1550, 1150], speed: [0, 0] }
+  ],
+  reversers: [
+    {position: [1000, 720]},
+    {position: [1000, 80]}
   ],
   victory: { position: [1300, 600], scale: [1, 14] }
 });
