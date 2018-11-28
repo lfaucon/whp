@@ -1,0 +1,54 @@
+{
+  "robot": {
+    "position": [25, 400],
+    "hasBlueGun": false,
+    "hasYellowGun": false
+  },
+  "portal_blue": { "position": [650, 882], "scale": [8, 1], "direction": "UP" },
+  "portal_yellow": {
+    "position": [950, 782],
+    "scale": [8, 1],
+    "direction": "UP"
+  },
+  "blocks": [
+    { "position": [800, 1100], "scale": [32, 4] },
+    { "position": [950, 800], "scale": [2, 0.5] },
+    { "position": [650, 900], "scale": [2, 0.5] },
+    { "position": [125, 600], "scale": [5, 0.5] },
+    { "position": [1475, 400], "scale": [5, 0.5] }
+  ],
+  "killers": [
+    { "position": [50, 950], "speed": [0, 0] },
+    { "position": [100, 950], "speed": [0, 0] },
+    { "position": [150, 950], "speed": [0, 0] },
+    { "position": [200, 950], "speed": [0, 0] },
+    { "position": [250, 950], "speed": [0, 0] },
+    { "position": [300, 950], "speed": [0, 0] },
+    { "position": [350, 950], "speed": [0, 0] },
+    { "position": [400, 950], "speed": [0, 0] },
+    { "position": [450, 950], "speed": [0, 0] },
+    { "position": [500, 950], "speed": [0, 0] },
+    { "position": [550, 950], "speed": [0, 0] },
+    { "position": [600, 950], "speed": [0, 0] },
+    { "position": [650, 950], "speed": [0, 0] },
+    { "position": [700, 950], "speed": [0, 0] },
+    { "position": [750, 950], "speed": [0, 0] },
+    { "position": [800, 950], "speed": [0, 0] },
+    { "position": [850, 950], "speed": [0, 0] },
+    { "position": [900, 950], "speed": [0, 0] },
+    { "position": [950, 950], "speed": [0, 0] },
+    { "position": [1000, 950], "speed": [0, 0] },
+    { "position": [1050, 950], "speed": [0, 0] },
+    { "position": [1100, 950], "speed": [0, 0] },
+    { "position": [1150, 950], "speed": [0, 0] },
+    { "position": [1200, 950], "speed": [0, 0] },
+    { "position": [1250, 950], "speed": [0, 0] },
+    { "position": [1300, 950], "speed": [0, 0] },
+    { "position": [1350, 950], "speed": [0, 0] },
+    { "position": [1400, 950], "speed": [0, 0] },
+    { "position": [1450, 950], "speed": [0, 0] },
+    { "position": [1500, 950], "speed": [0, 0] },
+    { "position": [1550, 950], "speed": [0, 0] }
+  ],
+  "victory": { "position": [1594, 300], "scale": [1, 14] }
+}

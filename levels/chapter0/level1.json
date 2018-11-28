@@ -1,0 +1,21 @@
+{
+  "name": "Jump",
+  "intro": "Let's get you some exercise",
+  "robot": {
+    "position": [75, 600],
+    "hasBlueGun": false,
+    "hasYellowGun": false
+  },
+  "blocks": [
+    { "position": [800, 1000], "scale": [32, 4] },
+    { "position": [1050, 850], "scale": [31, 2] },
+    { "position": [1150, 750], "scale": [25, 2] },
+    { "position": [1250, 650], "scale": [19, 2] },
+    { "position": [1350, 550], "scale": [13, 2] },
+    { "position": [1450, 450], "scale": [7, 2] },
+    { "position": [800, 50], "scale": [40, 2] }
+  ],
+  "killers": [],
+  "reversers": [],
+  "victory": { "position": [1590, 300], "scale": [1, 14] }
+}

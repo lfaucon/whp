@@ -23,11 +23,11 @@ var ROBOT_JUMP = 600;
 var LASER_SPEED = 3500;
 var MAX_ROBOT_SPEED = 2500;
 
-var currentLevel = 0;
+var currentLevel;
+var currentLevelIndex = 0;
 var currentDeathRate = 0;
 
 var gladosBlink;
-var isPaused = false;
 
 var cursors;
 var robot;
@@ -43,9 +43,11 @@ var safezones;
 
 var blocksCollider;
 
-var isMoving = false;
+var isCreated = false;
 
 var sound_effect;
+
+var anyKeyListener;
 
 var game = new Phaser.Game(config);
 
@@ -72,7 +74,6 @@ function preload() {
 }
 
 function loadLevel(level) {
-  isPaused = false;
   if (!level) return;
 
   // Add the sprite for the robot
@@ -195,18 +196,20 @@ function loadLevel(level) {
 }
 
 function levelWon() {
-  currentLevel = currentLevel + 1;
-  pauseWithDialog("You won!", () => that.scene.restart());
+  pauseWithDialog("You won!", () => {
+    currentLevelIndex = currentLevelIndex + 1;
+    that.scene.restart();
+  });
 }
 
 function storyDialog(dialog) {
   that.physics.pause();
 
-  storyBackground = that.add.graphics();
-  storyBackground.fillStyle(0xe3c0c4, 0.5);
+  var storyBackground = that.add.graphics();
+  storyBackground.fillStyle(0xffff00, 0.2);
   storyBackground.fillRect(0, 0, 1600, 1100);
 
-  storyBubble = that.add.graphics();
+  var storyBubble = that.add.graphics();
   storyBubble.fillStyle(0x444444);
   storyBubble.fillRoundedRect(300, 600, 1250, 450, 42);
 
@@ -215,8 +218,8 @@ function storyDialog(dialog) {
     fill: "#eee"
   };
 
-  storyText = that.add.text(360, 640, dialog, style);
-  storyText.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
+  var storyText = that.add.text(360, 640, dialog, style);
+  storyText.setShadow(6, 6, "rgba(0,0,0,0.5)", 6);
 
   glados = that.add.sprite(150, 725, "glados");
   glados.setScale(4);
@@ -225,7 +228,8 @@ function storyDialog(dialog) {
   gladosBlink.fillStyle(0xffff22, 1.0);
   gladosBlink.fillCircle(140, 790, 30, 60);
 
-  that.input.keyboard.on("keydown", () => {
+  if (anyKeyListener) anyKeyListener.removeAllListeners();
+  anyKeyListener = that.input.keyboard.on("keydown", () => {
     storyBubble.destroy();
     storyBackground.destroy();
     storyText.destroy();
@@ -241,24 +245,31 @@ function displayHud() {
   graphics.fillRoundedRect(0, -100, 1600, 100, { tl: 0, tr: 0, bl: 0, br: 0 });
 
   var style = {
-    font: "bold 64px Arial",
-    fill: "#fff",
+    font: "56px Courier",
+    fill: "#eee",
     boundsAlignH: "center",
     boundsAlignV: "middle"
   };
 
   textHudLevel = that.add
-    .text(20, -80, "Level: " + currentLevel, style)
+    .text(20, -80, "Level: " + (currentLevelIndex + 1), style)
     .setOrigin(0, 0);
-  textHudLevel.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
+  textHudLevel.setShadow(6, 6, "rgba(0,0,0,0.5)", 6);
+
+  textHudLevelName = that.add
+    .text(800, -80, currentLevel.name, style)
+    .setOrigin(0.5, 0);
+  textHudLevelName.setShadow(6, 6, "rgba(0,0,0,0.5)", 6);
 
   textHudDeath = that.add
     .text(1580, -80, "Death: " + currentDeathRate, style)
     .setOrigin(1, 0);
-  textHudDeath.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
+  textHudDeath.setShadow(6, 6, "rgba(0,0,0,0.5)", 6);
 }
 
 function create() {
+  isCreated = false;
+
   this.cameras.main.setBounds(0, -100, 1600, 1400);
   this.physics.world.setBounds(0, 0, 1600, 1200);
 
@@ -273,11 +284,21 @@ function create() {
   this.cameras.main.setZoom(0.5);
 
   // Level
-  loadLevel(levels[currentLevel]);
-  that.input.on("pointerup", shootLaser);
+  var requestURL = "levels/" + levelNames[currentLevelIndex] + ".json";
+  var request = new XMLHttpRequest();
+  request.open("GET", requestURL);
+  request.setRequestHeader("Cache-Control", "no-cache");
+  request.responseType = "json";
+  request.onload = function() {
+    currentLevel = request.response;
+    loadLevel(currentLevel);
+    isCreated = true;
+    // Hud
+    displayHud();
+  };
+  request.send();
 
-  // Hud
-  displayHud();
+  that.input.on("pointerup", shootLaser);
 }
 
 const pauseWithDialog = (dialog, callback) => {
@@ -296,9 +317,10 @@ const pauseWithDialog = (dialog, callback) => {
   };
 
   text = that.add.text(800, 500, dialog, style).setOrigin(0.5, 0.5);
-  text.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
+  text.setShadow(6, 6, "rgba(0,0,0,0.5)", 6);
 
-  that.input.keyboard.on("keydown", callback);
+  if (anyKeyListener) anyKeyListener.removeAllListeners();
+  anyKeyListener = that.input.keyboard.on("keydown", callback);
 };
 
 const robotDeath = () => {
@@ -399,7 +421,7 @@ const teleportTo = color => (_, item) => {
 };
 
 const shootLaser = pointer => {
-  const level = levels[currentLevel].robot;
+  const level = currentLevel.robot;
   const canShoot = cursors.shift.isDown ? level.hasYellowGun : level.hasBlueGun;
   if (!canShoot) return;
 
@@ -421,6 +443,8 @@ const shootLaser = pointer => {
 };
 
 function update(time, delta) {
+  if (!isCreated) return;
+
   gladosBlink.setAlpha(1 - Math.cos(time / 640) ** 6);
 
   const v = robot.body.velocity.x;
