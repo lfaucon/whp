@@ -1,4 +1,5 @@
 levels.push({
+  intro: "Welcome test subject #1337",
   robot: {
     position: [75, 600],
     hasBlueGun: false,

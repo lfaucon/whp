@@ -191,11 +191,48 @@ function loadLevel(level) {
   that.physics.add.collider(laser_blue, blocks, makePortal("blue"));
   that.physics.add.collider(laser_yellow, blocks, makePortal("yellow"));
   initCollider();
+  storyDialog(level.intro || "hello world....");
 }
 
 function levelWon() {
   currentLevel = currentLevel + 1;
   pauseWithDialog("You won!", () => that.scene.restart());
+}
+
+function storyDialog(dialog) {
+  that.physics.pause();
+
+  storyBackground = that.add.graphics();
+  storyBackground.fillStyle(0xe3c0c4, 0.5);
+  storyBackground.fillRect(0, 0, 1600, 1100);
+
+  storyBubble = that.add.graphics();
+  storyBubble.fillStyle(0x444444);
+  storyBubble.fillRoundedRect(300, 600, 1250, 450, 42);
+
+  var style = {
+    font: "64px Courier",
+    fill: "#eee"
+  };
+
+  storyText = that.add.text(360, 640, dialog, style);
+  storyText.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
+
+  glados = that.add.sprite(150, 725, "glados");
+  glados.setScale(4);
+
+  gladosBlink = that.add.graphics();
+  gladosBlink.fillStyle(0xffff22, 1.0);
+  gladosBlink.fillCircle(140, 790, 30, 60);
+
+  that.input.keyboard.on("keydown", () => {
+    storyBubble.destroy();
+    storyBackground.destroy();
+    storyText.destroy();
+    glados.destroy();
+    gladosBlink.destroy();
+    that.physics.resume();
+  });
 }
 
 function displayHud() {
@@ -219,14 +256,6 @@ function displayHud() {
     .text(1580, -80, "Death: " + currentDeathRate, style)
     .setOrigin(1, 0);
   textHudDeath.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
-
-  glados = that.add.sprite(1600 / 2, -98, "glados");
-  glados.setOrigin(0.5, 0);
-  glados.setScale(0.8);
-
-  gladosBlink = that.add.graphics();
-  gladosBlink.fillStyle(0x222222, 1.0);
-  gladosBlink.fillCircle(1600 / 2 - 2, -38, 8, 8);
 }
 
 function create() {
@@ -392,7 +421,7 @@ const shootLaser = pointer => {
 };
 
 function update(time, delta) {
-  gladosBlink.setAlpha(isPaused ? 0 : Math.cos(time / 200));
+  gladosBlink.setAlpha(1 - Math.cos(time / 640) ** 6);
 
   const v = robot.body.velocity.x;
   const gSign = that.physics.world.gravity.y < 0 ? 1 : -1;
