@@ -1,0 +1,11 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #111313;
+}
+
+h1 {
+  color: #ccc3c3;
+  font-size: 300%;
+}

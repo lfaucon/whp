@@ -200,7 +200,7 @@ function levelWon() {
 
 function displayHud() {
   graphics = that.add.graphics();
-  graphics.fillStyle(0x000e54, 1.0);
+  graphics.fillStyle(0x555555, 1.0);
   graphics.fillRoundedRect(0, -100, 1600, 100, { tl: 0, tr: 0, bl: 0, br: 0 });
 
   var style = {
@@ -409,9 +409,9 @@ function update(time, delta) {
 
   // Moving left and right
   if (cursors.left.isDown) {
-    robot.setVelocityX(v < -ROBOT_SPEED ? v : Math.max(-ROBOT_SPEED, v - 50));
+    robot.setVelocityX(v < -ROBOT_SPEED ? v : Math.max(-ROBOT_SPEED, v - 35));
   } else if (cursors.right.isDown) {
-    robot.setVelocityX(v > ROBOT_SPEED ? v : Math.min(ROBOT_SPEED, v + 50));
+    robot.setVelocityX(v > ROBOT_SPEED ? v : Math.min(ROBOT_SPEED, v + 35));
   }
 
   // Jumping
