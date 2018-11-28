@@ -1,0 +1,16 @@
+{
+  "name": "LEVEL 222222",
+  "intro": "Hello there",
+  "robot": {
+    "position": [75, 600],
+    "hasBlueGun": false,
+    "hasYellowGun": false
+  },
+  "blocks": [
+    { "position": [800, 950], "scale": [40, 6] },
+    { "position": [800, 150], "scale": [40, 6] }
+  ],
+  "killers": [],
+  "reversers": [],
+  "victory": { "position": [1550, 700], "scale": [1, 14] }
+}
