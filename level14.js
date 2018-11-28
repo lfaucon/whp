@@ -21,7 +21,7 @@ levels.push({
     { position: [600, 300], speed: [0, 0] },
     { position: [650, 300], speed: [0, 0] },
     { position: [700, 300], speed: [0, 0] },
-    { position: [750, 200], speed: [0, 0] },
+
     { position: [800, 200], speed: [0, 0] },
 
 
