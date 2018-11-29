@@ -1,8 +1,8 @@
 {
-  "name": "Jump",
+  "name": "Jump 3",
   "intro": "Let's get you some exercise",
   "robot": {
-    "position": [75, 700],
+    "position": [75, 750],
     "hasBlueGun": false,
     "hasYellowGun": false
   },
@@ -14,7 +14,18 @@
     { "position": [1450, 550], "scale": [7, 2] },
     { "position": [800, 50], "scale": [40, 2] }
   ],
-  "killers": [],
+  "killers": [
+    { "position": [200, 750] },
+    { "position": [500, 650] },
+    { "position": [800, 550] },
+    { "position": [1100, 450] }
+  ],
   "reversers": [],
+  "collectibles": [
+    { "position": [200, 650] },
+    { "position": [500, 550] },
+    { "position": [800, 450] },
+    { "position": [1100, 350] }
+  ],
   "victory": { "position": [1590, 300], "scale": [1, 14] }
 }

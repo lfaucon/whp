@@ -1,5 +1,5 @@
 {
-  "name": "Jump",
+  "name": "Jump 2",
   "intro": "Let's get you some exercise",
   "robot": {
     "position": [75, 700],
@@ -16,5 +16,11 @@
   ],
   "killers": [],
   "reversers": [],
+  "collectibles": [
+    { "position": [200, 650] },
+    { "position": [500, 550] },
+    { "position": [800, 450] },
+    { "position": [1100, 350] }
+  ],
   "victory": { "position": [1590, 300], "scale": [1, 14] }
 }

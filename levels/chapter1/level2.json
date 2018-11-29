@@ -1,5 +1,5 @@
 {
-  "name": "Jump",
+  "name": "First challenge",
   "intro": "Let's get you some exercise",
   "robot": {
     "position": [75, 700],
@@ -14,7 +14,14 @@
     { "position": [1450, 550], "scale": [7, 2] },
     { "position": [800, 50], "scale": [40, 2] }
   ],
-  "killers": [],
+  "killers": [
+    { "position": [225, 750], "speed": [0, 850], "scale": [5, 1] },
+    { "position": [525, 650], "speed": [0, 850], "scale": [5, 1] },
+    { "position": [825, 550], "speed": [0, 850], "scale": [5, 1] },
+    { "position": [1125, 450], "speed": [0, 850], "scale": [5, 1] },
+    { "position": [1425, 350], "speed": [0, 850], "scale": [5, 1] }
+  ],
   "reversers": [],
-  "victory": { "position": [1590, 300], "scale": [1, 14] }
+  "collectibles": [],
+  "victory": { "position": [1590, 400], "scale": [1, 14] }
 }

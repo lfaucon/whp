@@ -1,8 +1,8 @@
 {
-  "name": "LEVEL 222222",
+  "name": "Love Green 2",
   "intro": "Hello there",
   "robot": {
-    "position": [75, 600],
+    "position": [125, 600],
     "hasBlueGun": false,
     "hasYellowGun": false
   },
@@ -10,7 +10,12 @@
     { "position": [800, 950], "scale": [40, 6] },
     { "position": [800, 150], "scale": [40, 6] }
   ],
+  "collectibles": [
+    { "position": [600, 650] },
+    { "position": [1550, 775] },
+    { "position": [1350, 775] }
+  ],
   "killers": [],
   "reversers": [],
-  "victory": { "position": [1550, 700], "scale": [1, 14] }
+  "victory": { "position": [50, 700], "scale": [1, 14] }
 }
