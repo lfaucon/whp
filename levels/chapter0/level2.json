@@ -10,6 +10,7 @@
     { "position": [800, 950], "scale": [40, 6] },
     { "position": [800, 150], "scale": [40, 6] }
   ],
+  "collectibles": [{ "position": [600, 650] }],
   "killers": [],
   "reversers": [],
   "victory": { "position": [1550, 700], "scale": [1, 14] }

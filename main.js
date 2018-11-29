@@ -29,7 +29,6 @@ var currentDeathRate = 0;
 
 var gladosBlink;
 
-var cursors;
 var robot;
 var blocks;
 var killers;
@@ -40,13 +39,18 @@ var laser_blue;
 var portal_yellow;
 var laser_yellow;
 var safezones;
+var collectibles;
 
 var blocksCollider;
 
 var isCreated = false;
 
-var sound_effect;
+var jump_sound_effect;
+var collect_sound_effect;
+var victory_sound_effect;
+var death_sound_effect;
 
+var cursors;
 var anyKeyListener;
 
 var game = new Phaser.Game(config);
@@ -54,8 +58,10 @@ var game = new Phaser.Game(config);
 function preload() {
   that = this;
 
-  this.load.audio("space_music", ["assets/ObservingTheStar.ogg"]);
-  this.load.audio("space_sound_effect", ["assets/highUp.mp3"]);
+  this.load.audio("jump_sound", "assets/sounds/phaseJump2.mp3");
+  this.load.audio("collect_sound", "assets/sounds/powerUp6.mp3");
+  this.load.audio("victory_sound", "assets/sounds/powerUp3.mp3");
+  this.load.audio("death_sound", "assets/sounds/twoTone1.mp3");
 
   this.load.image("block_white", "assets/50x50-white.png");
   this.load.image("block_black", "assets/50x50-black.png");
@@ -66,7 +72,6 @@ function preload() {
   this.load.image("glados", "assets/glados.png");
 
   this.load.image("victory", "assets/12x12-green.png");
-
   this.load.image("portal_blue", "assets/12x12-blue.png");
   this.load.image("portal_yellow", "assets/12x12-yellow.png");
 
@@ -131,6 +136,10 @@ function loadLevel(level) {
     });
   }
 
+  that.physics.add.collider(reverser, robot, x => {
+    that.physics.world.gravity.y *= -1;
+  });
+
   // Killers
   killers = that.physics.add.group({
     immovable: false,
@@ -148,10 +157,22 @@ function loadLevel(level) {
   }
   that.physics.add.collider(killers, blocks);
   that.physics.add.collider(killers, safezones);
-  that.physics.add.collider(killers, robot, robotDeath);
-  that.physics.add.collider(reverser, robot, x => {
-    that.physics.world.gravity.y *= -1;
+  that.physics.add.overlap(killers, robot, robotDeath);
+
+  // Add collectibles
+  collectibles = that.physics.add.group({
+    immovable: false,
+    allowGravity: false
   });
+
+  if (level.collectibles) {
+    level.collectibles.forEach(collectible => {
+      const [x, y] = collectible.position;
+      collectibles.create(x, y, "victory").setScale(2);
+    });
+  }
+
+  that.physics.add.overlap(robot, collectibles, collectPoint);
 
   // Add static image for victory condition
   const [x, y] = level.victory.position;
@@ -195,7 +216,14 @@ function loadLevel(level) {
   storyDialog(level.intro || "hello world....");
 }
 
+function collectPoint(_, collectible) {
+  collectible.destroy();
+  collect_sound_effect.play();
+}
+
 function levelWon() {
+  if (collectibles.getChildren().length > 0) return;
+  victory_sound_effect.play();
   pauseWithDialog("You won!", () => {
     currentLevelIndex = currentLevelIndex + 1;
     that.scene.restart();
@@ -210,6 +238,8 @@ function storyDialog(dialog) {
   storyBackground.fillRect(0, 0, 1600, 1100);
 
   var storyBubble = that.add.graphics();
+  storyBubble.fillStyle(0x121212);
+  storyBubble.fillRoundedRect(290, 590, 1270, 470, 52);
   storyBubble.fillStyle(0x444444);
   storyBubble.fillRoundedRect(300, 600, 1250, 450, 42);
 
@@ -278,7 +308,13 @@ function create() {
 
   // Starts playing an amazing
   // this.sound.add("space_music", { loop: true }).play();
-  sound_effect = this.sound.add("space_sound_effect", { loop: false });
+  jump_sound_effect = this.sound.add("jump_sound", { loop: false });
+  collect_sound_effect = this.sound.add("collect_sound", { loop: false });
+  victory_sound_effect = this.sound.add("victory_sound", {
+    loop: false,
+    volume: 0.25
+  });
+  death_sound_effect = this.sound.add("death_sound", { loop: false });
 
   // Camera :)
   this.cameras.main.setZoom(0.5);
@@ -325,6 +361,7 @@ const pauseWithDialog = (dialog, callback) => {
 
 const robotDeath = () => {
   currentDeathRate += 1;
+  death_sound_effect.play();
   pauseWithDialog("You're dead", () => that.scene.restart());
 };
 
@@ -470,6 +507,6 @@ function update(time, delta) {
   // Jumping
   if (cursors.up.isDown && onTheGround) {
     robot.setVelocityY(gSign * ROBOT_JUMP);
-    sound_effect.play();
+    jump_sound_effect.play();
   }
 }
