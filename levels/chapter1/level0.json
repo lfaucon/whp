@@ -1,0 +1,20 @@
+{
+  "name": "Hate Red",
+  "intro": "This level is harder than \nyou think...",
+  "robot": {
+    "position": [75, 600],
+    "hasBlueGun": false,
+    "hasYellowGun": false
+  },
+  "blocks": [
+    { "position": [800, 950], "scale": [40, 6] },
+    { "position": [800, 150], "scale": [40, 6] }
+  ],
+  "killers": [
+    { "position": [600, 650], "speed": [0, 0] },
+    { "position": [1150, 775], "speed": [0, 0] },
+    { "position": [1350, 775], "speed": [0, 0] }
+  ],
+  "reversers": [],
+  "victory": { "position": [1550, 700], "scale": [1, 14] }
+}

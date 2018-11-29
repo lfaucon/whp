@@ -24,7 +24,7 @@ var LASER_SPEED = 3500;
 var MAX_ROBOT_SPEED = 2500;
 
 var currentLevel;
-var currentLevelIndex = 3;
+var currentLevelIndex = 8;
 var currentDeathRate = 0;
 
 var gladosBlink;
@@ -149,8 +149,9 @@ function loadLevel(level) {
   if (level.killers) {
     level.killers.forEach(killer => {
       const [x, y] = killer.position;
-      const [vX, vY] = killer.speed;
-      const k = killers.create(x, y, "block_red");
+      const [vX, vY] = killer.speed || [0, 0];
+      const [sX, sY] = killer.scale || [1, 1];
+      const k = killers.create(x, y, "block_red").setScale(sX, sY);
       k.setVelocity(vX, vY);
       k.setBounce(1);
     });

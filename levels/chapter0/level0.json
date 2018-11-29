@@ -7,8 +7,8 @@
     "hasYellowGun": false
   },
   "blocks": [
-    { "position": [800, 950], "scale": [40, 6] },
-    { "position": [800, 150], "scale": [40, 6] }
+    { "position": [800, 950], "scale": [32, 6] },
+    { "position": [800, 150], "scale": [32, 6] }
   ],
   "killers": [],
   "reversers": [],

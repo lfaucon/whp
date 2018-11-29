@@ -1,0 +1,33 @@
+{
+  "name": "Careful",
+  "intro": "DO NOT JUMP !",
+  "robot": {
+    "position": [50, 700],
+    "hasBlueGun": false,
+    "hasYellowGun": false
+  },
+  "blocks": [
+    { "position": [800, 950], "scale": [32, 6] },
+    { "position": [800, 200], "scale": [32, 8] }
+  ],
+  "killers": [
+    { "position": [200, 750], "speed": [0, 600] },
+    { "position": [300, 700], "speed": [0, 600] },
+    { "position": [400, 650], "speed": [0, 600] },
+    { "position": [500, 600], "speed": [0, 600] },
+    { "position": [700, 600], "speed": [0, 600] },
+    { "position": [800, 600], "speed": [0, -600] },
+    { "position": [900, 600], "speed": [0, 600] },
+    { "position": [1000, 600], "speed": [0, -600] },
+    { "position": [1300, 450], "speed": [0, 600] },
+    { "position": [1400, 450], "speed": [0, 600] },
+    { "position": [1300, 750], "speed": [0, -600] },
+    { "position": [1400, 750], "speed": [0, -600] }
+  ],
+  "victory": { "position": [1594, 750], "scale": [1, 8] },
+  "safezones": [
+    { "position": [600, 600], "scale": [2, 8] },
+    { "position": [1100, 600], "scale": [2, 8] },
+    { "position": [1350, 600], "scale": [4, 4] }
+  ]
+}

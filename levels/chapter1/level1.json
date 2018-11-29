@@ -1,0 +1,31 @@
+{
+  "name": "Jump 3",
+  "intro": "Let's get you some exercise",
+  "robot": {
+    "position": [75, 750],
+    "hasBlueGun": false,
+    "hasYellowGun": false
+  },
+  "blocks": [
+    { "position": [800, 1000], "scale": [32, 4] },
+    { "position": [1150, 850], "scale": [31, 2] },
+    { "position": [1250, 750], "scale": [23, 2] },
+    { "position": [1350, 650], "scale": [15, 2] },
+    { "position": [1450, 550], "scale": [7, 2] },
+    { "position": [800, 50], "scale": [40, 2] }
+  ],
+  "killers": [
+    { "position": [200, 750] },
+    { "position": [500, 650] },
+    { "position": [800, 550] },
+    { "position": [1100, 450] }
+  ],
+  "reversers": [],
+  "collectibles": [
+    { "position": [200, 650] },
+    { "position": [500, 550] },
+    { "position": [800, 450] },
+    { "position": [1100, 350] }
+  ],
+  "victory": { "position": [1590, 300], "scale": [1, 14] }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "First challenge",
+  "intro": "Let's get you some exercise",
+  "robot": {
+    "position": [75, 700],
+    "hasBlueGun": false,
+    "hasYellowGun": false
+  },
+  "blocks": [
+    { "position": [800, 1000], "scale": [32, 4] },
+    { "position": [1150, 850], "scale": [31, 2] },
+    { "position": [1250, 750], "scale": [23, 2] },
+    { "position": [1350, 650], "scale": [15, 2] },
+    { "position": [1450, 550], "scale": [7, 2] },
+    { "position": [800, 50], "scale": [40, 2] }
+  ],
+  "killers": [
+    { "position": [225, 750], "speed": [0, 850], "scale": [5, 1] },
+    { "position": [525, 650], "speed": [0, 850], "scale": [5, 1] },
+    { "position": [825, 550], "speed": [0, 850], "scale": [5, 1] },
+    { "position": [1125, 450], "speed": [0, 850], "scale": [5, 1] },
+    { "position": [1425, 350], "speed": [0, 850], "scale": [5, 1] }
+  ],
+  "reversers": [],
+  "collectibles": [],
+  "victory": { "position": [1590, 400], "scale": [1, 14] }
+}
