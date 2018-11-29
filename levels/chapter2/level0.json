@@ -1,0 +1,30 @@
+{
+  "name": "Portal",
+  "intro": "Now we start serious matters",
+  "robot": {
+    "position": [25, 800],
+    "hasBlueGun": false,
+    "hasYellowGun": false
+  },
+  "portal_blue": { "position": [350, 419], "scale": [6, 1], "direction": "UP" },
+  "portal_yellow": {
+    "position": [950, 994],
+    "scale": [6, 1],
+    "direction": "UP"
+  },
+  "blocks": [
+    { "position": [800, 1100], "scale": [32, 4] },
+    { "position": [800, 500], "scale": [32, 3] }
+  ],
+  "killers": [
+    { "position": [1100, 400] },
+    { "position": [500, 400] },
+    { "position": [200, 975] }
+  ],
+  "collectibles": [
+    { "position": [1100, 975] },
+    { "position": [500, 975] },
+    { "position": [200, 400] }
+  ],
+  "victory": { "position": [1594, 350], "scale": [1, 12] }
+}

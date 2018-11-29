@@ -24,7 +24,7 @@ var LASER_SPEED = 3500;
 var MAX_ROBOT_SPEED = 2500;
 
 var currentLevel;
-var currentLevelIndex = 8;
+var currentLevelIndex = 13;
 var currentDeathRate = 0;
 
 var gladosBlink;
