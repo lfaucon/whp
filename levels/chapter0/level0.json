@@ -1,7 +1,7 @@
 {
   "name": "Love Green",
-  "intro": "Welcome test subject #1337",
-  "onWinText": "That was easy enough\nDon't start thinking too\nhighly of yourself",
+  "intro": "Welcome test subject #1337..\n\nJust use ←, ↑ and → to move..\n\nand get to the green portal",
+  "onWinText": "That was easy enough\n\nDon't start thinking too\nhighly of yourself",
   "robot": {
     "position": [75, 600],
     "hasBlueGun": false,

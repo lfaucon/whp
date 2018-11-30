@@ -1,0 +1,28 @@
+{
+  "name": "Giant stairs 3 ",
+  "intro": ".",
+  "robot": {
+    "position": [75, 700],
+    "hasBlueGun": true,
+    "hasYellowGun": false
+  },
+  "portal_yellow": {
+    "position": [200, 994],
+    "scale": [6, 1],
+    "direction": "UP"
+  },
+  "blocks": [
+    { "position": [800, 1050], "scale": [32, 2] },
+    { "position": [1150, 900], "scale": [31, 4] },
+    { "position": [1350, 700], "scale": [23, 4] },
+    { "position": [1550, 500], "scale": [15, 4] }
+  ],
+  "killers": [
+    { "position": [575, 794], "scale": [16, 0.5] },
+    { "position": [975, 594], "scale": [16, 0.5] },
+    { "position": [975, 12], "scale": [52, 2] },
+    { "position": [1588, 90], "scale": [2, 10] }
+  ],
+  "reversers": [],
+  "victory": { "position": [1590, 300], "scale": [1, 14] }
+}
