@@ -1,6 +1,7 @@
 {
   "name": "Love Green",
   "intro": "Welcome test subject #1337",
+  "onWinText": "That was easy enough\nDon't start thinking too\nhighly of yourself",
   "robot": {
     "position": [75, 600],
     "hasBlueGun": false,

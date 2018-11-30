@@ -1,6 +1,7 @@
 {
   "name": "Be smart",
   "intro": "This is where test subjects\nusually FAIL ! ! !\n\n --- MUAHAHAHAHA ---",
+  "onWinText": "You make me so proud. . .",
   "robot": {
     "position": [25, 800],
     "hasBlueGun": false,
