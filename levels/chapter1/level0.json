@@ -1,6 +1,7 @@
 {
   "name": "Hate Red",
   "intro": "This level is harder than \nyou think...",
+  "onDeathText": "See? I told you",
   "robot": {
     "position": [75, 600],
     "hasBlueGun": false,

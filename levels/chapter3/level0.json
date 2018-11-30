@@ -1,6 +1,6 @@
 {
   "name": "Giant steps",
-  "intro": ".",
+  "intro": "Take that portal gun #1337\n\nMove your target with W,A,S,D\nand shot with space.\nGood luck",
   "robot": {
     "position": [75, 700],
     "hasBlueGun": true,

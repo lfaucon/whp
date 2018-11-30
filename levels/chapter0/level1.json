@@ -1,6 +1,6 @@
 {
   "name": "Jump",
-  "intro": "Let's get you some exercise",
+  "intro": "Same thing here\n\nThis should not be too hard\nfor you... yet...",
   "robot": {
     "position": [75, 700],
     "hasBlueGun": false,

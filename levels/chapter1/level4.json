@@ -1,8 +1,8 @@
 {
   "name": "Careful",
-  "intro": "Show me what you are capable\nof..",
+  "intro": "Now show me what you are \ncapable of..",
   "onWinText": "You are not as weak as I\nthought, but the hardest is\nyet to come",
-  "onDeathText": "Hahaha ! ! !\nYou will never make it...",
+  "onDeathText": "Hahaha ! ! !\n\nYou will never make it...",
   "robot": {
     "position": [50, 700],
     "hasBlueGun": false,

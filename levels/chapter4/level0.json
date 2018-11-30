@@ -1,6 +1,6 @@
 {
   "name": "Giant stairs 2",
-  "intro": ".",
+  "intro": "I just improved your gun. Now\nyou can shoot yellow portal.\n\nSimply hold SHIFT when you\nshoot.",
   "robot": {
     "position": [75, 700],
     "hasBlueGun": true,

@@ -22,6 +22,7 @@ var ROBOT_SPEED = 400;
 var ROBOT_JUMP = 600;
 var LASER_SPEED = 3500;
 var MAX_ROBOT_SPEED = 2500;
+var TARGET_SPEED = 600;
 
 var currentLevel;
 var currentLevelIndex = 0;
@@ -30,6 +31,7 @@ var currentDeathRate = 0;
 var gladosBlink;
 
 var robot;
+var target;
 var blocks;
 var killers;
 var reverser;
@@ -54,6 +56,7 @@ var victory_sound_effect;
 var death_sound_effect;
 
 var cursors;
+var targetUp, targetDown, targetLeft, targetRight;
 
 var game = new Phaser.Game(config);
 
@@ -65,27 +68,28 @@ function preload() {
   this.load.audio("victory_sound", "assets/sounds/powerUp3.mp3");
   this.load.audio("death_sound", "assets/sounds/twoTone1.mp3");
 
-  this.load.image("block_white", "assets/50x50-white.png");
-  this.load.image("block_black", "assets/50x50-black.png");
-  this.load.image("block_red", "assets/24x24-red.png");
-  this.load.image("block_green", "assets/50x50-green.png");
+  this.load.image("block_white", "assets/images/50x50-white.png");
+  this.load.image("block_black", "assets/images/50x50-black.png");
+  this.load.image("block_red", "assets/images/24x24-red.png");
+  this.load.image("block_green", "assets/images/50x50-green.png");
 
-  this.load.image("robot", "assets/50x50-pink.png");
-  this.load.image("glados", "assets/glados.png");
+  this.load.image("robot", "assets/images/50x50-pink.png");
+  this.load.image("target", "assets/images/32x32-target.png");
+  this.load.image("glados", "assets/images/glados.png");
 
-  this.load.image("victory", "assets/12x12-green.png");
-  this.load.image("portal_blue", "assets/12x12-blue.png");
-  this.load.image("portal_yellow", "assets/12x12-yellow.png");
+  this.load.image("victory", "assets/images/12x12-green.png");
+  this.load.image("portal_blue", "assets/images/12x12-blue.png");
+  this.load.image("portal_yellow", "assets/images/12x12-yellow.png");
 
-  this.load.image("reverser", "assets/12x12-check.png");
+  this.load.image("reverser", "assets/images/12x12-check.png");
 }
 
 function loadLevel(level) {
   if (!level) return;
 
   // Add the sprite for the robot
-  const [rX, rY] = level.robot.position;
-  robot = that.physics.add.sprite(rX, rY, "robot");
+  const [rx, ry] = level.robot.position;
+  robot = that.physics.add.sprite(rx, ry, "robot");
 
   // Add blocks to the board
   blocks = that.physics.add.group({
@@ -222,6 +226,13 @@ function loadLevel(level) {
       that.physics.resume();
     });
   }
+
+  // Creates the target
+  if (level.robot.hasBlueGun) {
+    target = that.physics.add.sprite(rx + 50, ry, "target");
+    target.body.allowGravity = false;
+    target.body.collideWorldBounds = true;
+  }
 }
 
 function collectPoint(_, collectible) {
@@ -322,10 +333,14 @@ function create() {
   isCreated = false;
 
   this.cameras.main.setBounds(0, -100, 1600, 1400);
-  this.physics.world.setBounds(0, 0, 1600, 1200);
+  this.physics.world.setBounds(0, 0, 1600, 1100);
 
   // Register the keyboard for receiving inputs
   cursors = this.input.keyboard.createCursorKeys();
+  targetUp = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+  targetDown = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+  targetRight = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+  targetLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
 
   // Starts playing an amazing
   // this.sound.add("space_music", { loop: true }).play();
@@ -342,7 +357,7 @@ function create() {
 
   // Level
   var requestURL = "levels/" + levelNames[currentLevelIndex] + ".json";
-  //requestURL = "levels/chapter4/level2.json";
+  // requestURL = "levels/chapter4/level1.json";
   var request = new XMLHttpRequest();
   request.open("GET", requestURL);
   request.setRequestHeader("Cache-Control", "no-cache");
@@ -356,7 +371,7 @@ function create() {
   };
   request.send();
 
-  that.input.on("pointerup", shootLaser);
+  that.input.keyboard.on("keydown", shootLaser);
 }
 
 const robotDeath = () => {
@@ -459,7 +474,9 @@ const teleportTo = color => (_, item) => {
   }
 };
 
-const shootLaser = pointer => {
+const shootLaser = key => {
+  if (key.keyCode != 32) return;
+
   const level = currentLevel.robot;
   const canShoot = cursors.shift.isDown ? level.hasYellowGun : level.hasBlueGun;
   if (!canShoot) return;
@@ -468,8 +485,8 @@ const shootLaser = pointer => {
   const laser_image = cursors.shift.isDown ? "portal_yellow" : "portal_blue";
 
   // Shooting a laser
-  var speedX = 2 * pointer.x - robot.x;
-  var speedY = 2 * pointer.y - (robot.y + 100);
+  var speedX = target.x - robot.x;
+  var speedY = target.y - robot.y;
   var norm = (speedX ** 2 + speedY ** 2) ** 0.5;
   if (norm > 0) {
     var laser = laser_group.create(robot.x, robot.y, laser_image);
@@ -484,6 +501,16 @@ const shootLaser = pointer => {
 function update(time, delta) {
   if (!isCreated) return;
 
+  if (target) {
+    if (targetDown.isDown) target.setVelocityY(TARGET_SPEED);
+    else if (targetUp.isDown) target.setVelocityY(-TARGET_SPEED);
+    else target.setVelocityY(0);
+
+    if (targetRight.isDown) target.setVelocityX(TARGET_SPEED);
+    else if (targetLeft.isDown) target.setVelocityX(-TARGET_SPEED);
+    else target.setVelocityX(0);
+  }
+
   gladosBlink.setAlpha(1 - Math.cos(time / 640) ** 6);
 
   const v = robot.body.velocity.x;
@@ -493,11 +520,8 @@ function update(time, delta) {
     (robot.body.touching.down && gSign < 0) ||
     (robot.body.touching.up && gSign > 0);
 
-  if (onTheGround) {
-    robot.setVelocityX(0.85 * v);
-  } else {
-    robot.setVelocityX(1 * v);
-  }
+  if (onTheGround) robot.setVelocityX(0.85 * v);
+  else robot.setVelocityX(1 * v);
 
   // Moving left and right
   if (cursors.left.isDown) {
