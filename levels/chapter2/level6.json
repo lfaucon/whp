@@ -19,37 +19,8 @@
     { "position": [1475, 200], "scale": [5, 0.5] }
   ],
   "killers": [
-    { "position": [50, 950], "speed": [0, 0] },
-    { "position": [100, 950], "speed": [0, 0] },
-    { "position": [150, 950], "speed": [0, 0] },
-    { "position": [200, 950], "speed": [0, 0] },
-    { "position": [250, 950], "speed": [0, 0] },
-    { "position": [300, 950], "speed": [0, 0] },
-    { "position": [350, 950], "speed": [0, 0] },
-    { "position": [400, 950], "speed": [0, 0] },
-    { "position": [450, 950], "speed": [0, 0] },
-    { "position": [500, 950], "speed": [0, 0] },
-    { "position": [550, 950], "speed": [0, 0] },
-    { "position": [600, 950], "speed": [0, 0] },
-    { "position": [650, 950], "speed": [0, 0] },
-    { "position": [700, 950], "speed": [0, 0] },
-    { "position": [750, 950], "speed": [0, 0] },
-    { "position": [800, 950], "speed": [0, 0] },
-    { "position": [850, 950], "speed": [0, 0] },
-    { "position": [900, 950], "speed": [0, 0] },
-    { "position": [950, 950], "speed": [0, 0] },
-    { "position": [1000, 950], "speed": [0, 0] },
-    { "position": [1050, 950], "speed": [0, 0] },
-    { "position": [1100, 950], "speed": [0, 0] },
-    { "position": [1150, 950], "speed": [0, 0] },
-    { "position": [1200, 950], "speed": [0, 0] },
-    { "position": [1250, 950], "speed": [0, 0] },
-    { "position": [1300, 950], "speed": [0, 0] },
-    { "position": [1350, 950], "speed": [0, 0] },
-    { "position": [1400, 950], "speed": [0, 0] },
-    { "position": [1450, 950], "speed": [0, 0] },
-    { "position": [1500, 950], "speed": [0, 0] },
-    { "position": [1550, 950], "speed": [0, 0] }
+    { "position": [800, 994], "scale": [100, 1] },
+    { "position": [800, 6], "scale": [100, 1] }
   ],
-  "victory": { "position": [1594, 100], "scale": [1, 14] }
+  "victory": { "position": [1594, 100], "scale": [1, 12] }
 }

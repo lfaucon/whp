@@ -24,7 +24,7 @@ var LASER_SPEED = 3500;
 var MAX_ROBOT_SPEED = 2500;
 
 var currentLevel;
-var currentLevelIndex = 0;
+var currentLevelIndex = 15;
 var currentDeathRate = 0;
 
 var gladosBlink;
@@ -46,6 +46,7 @@ var dialogText;
 var blocksCollider;
 
 var isCreated = false;
+var skipIntro = false;
 
 var jump_sound_effect;
 var collect_sound_effect;
@@ -215,9 +216,12 @@ function loadLevel(level) {
   that.physics.add.collider(laser_blue, blocks, makePortal("blue"));
   that.physics.add.collider(laser_yellow, blocks, makePortal("yellow"));
   initCollider();
-  pauseWithDialog(level.intro || "hello world....", () =>
-    that.physics.resume()
-  );
+  if (!skipIntro) {
+    pauseWithDialog(level.intro || "hello world....", () => {
+      skipIntro = true;
+      that.physics.resume();
+    });
+  }
 }
 
 function collectPoint(_, collectible) {
@@ -230,6 +234,7 @@ function levelWon() {
   victory_sound_effect.play();
   pauseWithDialog(currentLevel.onWinText || "You won!", () => {
     currentLevelIndex = currentLevelIndex + 1;
+    skipIntro = false;
     that.scene.restart();
   });
 }
