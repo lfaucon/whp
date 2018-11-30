@@ -342,6 +342,7 @@ function create() {
 
   // Level
   var requestURL = "levels/" + levelNames[currentLevelIndex] + ".json";
+  //requestURL = "levels/chapter4/level2.json";
   var request = new XMLHttpRequest();
   request.open("GET", requestURL);
   request.setRequestHeader("Cache-Control", "no-cache");
