@@ -1,6 +1,8 @@
 {
   "name": "Careful",
-  "intro": "DO NOT JUMP !",
+  "intro": "Show me what you are capable\nof..",
+  "onWinText": "You are not as weak as I\nthought, but the hardest is\nyet to come",
+  "onDeathText": "Hahaha ! ! !\nYou will never make it...",
   "robot": {
     "position": [50, 700],
     "hasBlueGun": false,

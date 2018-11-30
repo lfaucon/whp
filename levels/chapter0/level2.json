@@ -2,7 +2,7 @@
   "name": "Love Green 2",
   "intro": "Hello there",
   "robot": {
-    "position": [125, 600],
+    "position": [75, 600],
     "hasBlueGun": false,
     "hasYellowGun": false
   },
@@ -17,5 +17,5 @@
   ],
   "killers": [],
   "reversers": [],
-  "victory": { "position": [50, 700], "scale": [1, 14] }
+  "victory": { "position": [1100, 700], "scale": [1, 14] }
 }

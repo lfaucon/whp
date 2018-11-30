@@ -1,6 +1,6 @@
 {
   "name": "Gravity jump",
-  "intro": "You need to learn new tricks !",
+  "intro": "You need to learn new tricks.\nGood luck... you will need it",
   "robot": {
     "position": [25, 800],
     "hasBlueGun": false,

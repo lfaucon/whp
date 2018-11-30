@@ -24,7 +24,7 @@ var LASER_SPEED = 3500;
 var MAX_ROBOT_SPEED = 2500;
 
 var currentLevel;
-var currentLevelIndex = 13;
+var currentLevelIndex = 15;
 var currentDeathRate = 0;
 
 var gladosBlink;
@@ -41,9 +41,12 @@ var laser_yellow;
 var safezones;
 var collectibles;
 
+var dialogText;
+
 var blocksCollider;
 
 var isCreated = false;
+var skipIntro = false;
 
 var jump_sound_effect;
 var collect_sound_effect;
@@ -51,7 +54,6 @@ var victory_sound_effect;
 var death_sound_effect;
 
 var cursors;
-var anyKeyListener;
 
 var game = new Phaser.Game(config);
 
@@ -214,7 +216,12 @@ function loadLevel(level) {
   that.physics.add.collider(laser_blue, blocks, makePortal("blue"));
   that.physics.add.collider(laser_yellow, blocks, makePortal("yellow"));
   initCollider();
-  storyDialog(level.intro || "hello world....");
+  if (!skipIntro) {
+    pauseWithDialog(level.intro || "hello world....", () => {
+      skipIntro = true;
+      that.physics.resume();
+    });
+  }
 }
 
 function collectPoint(_, collectible) {
@@ -225,48 +232,61 @@ function collectPoint(_, collectible) {
 function levelWon() {
   if (collectibles.getChildren().length > 0) return;
   victory_sound_effect.play();
-  pauseWithDialog("You won!", () => {
+  pauseWithDialog(currentLevel.onWinText || "You won!", () => {
     currentLevelIndex = currentLevelIndex + 1;
+    skipIntro = false;
     that.scene.restart();
   });
 }
 
-function storyDialog(dialog) {
+function pauseWithDialog(dialog, callback) {
   that.physics.pause();
 
-  var storyBackground = that.add.graphics();
-  storyBackground.fillStyle(0xffff00, 0.2);
-  storyBackground.fillRect(0, 0, 1600, 1100);
+  var background = that.add.graphics();
+  background.fillStyle(0xffff00, 0.2);
+  background.fillRect(0, 0, 1600, 1100);
 
-  var storyBubble = that.add.graphics();
-  storyBubble.fillStyle(0x121212);
-  storyBubble.fillRoundedRect(290, 590, 1270, 470, 52);
-  storyBubble.fillStyle(0x444444);
-  storyBubble.fillRoundedRect(300, 600, 1250, 450, 42);
+  var bubble = that.add.graphics();
+  bubble.fillStyle(0x121212);
+  bubble.fillRoundedRect(290, 590, 1270, 470, 52);
+  bubble.fillStyle(0x444444);
+  bubble.fillRoundedRect(300, 600, 1250, 450, 42);
 
   var style = {
     font: "64px Courier",
     fill: "#eee"
   };
 
-  var storyText = that.add.text(360, 640, dialog, style);
-  storyText.setShadow(6, 6, "rgba(0,0,0,0.5)", 6);
+  dialogText = that.add.text(360, 640, "", style);
+  dialogText.setShadow(6, 6, "rgba(0,0,0,0.5)", 6);
 
-  glados = that.add.sprite(150, 725, "glados");
+  glados = that.physics.add.staticImage(150, 725, "glados");
   glados.setScale(4);
 
   gladosBlink = that.add.graphics();
   gladosBlink.fillStyle(0xffff22, 1.0);
   gladosBlink.fillCircle(140, 790, 30, 60);
 
-  if (anyKeyListener) anyKeyListener.removeAllListeners();
-  anyKeyListener = that.input.keyboard.on("keydown", () => {
-    storyBubble.destroy();
-    storyBackground.destroy();
-    storyText.destroy();
-    glados.destroy();
-    gladosBlink.destroy();
-    that.physics.resume();
+  var k = 0;
+  that.time.addEvent({
+    delay: 50,
+    callback: () => {
+      k = k + 1;
+      dialogText.text = dialog.slice(0, k);
+
+      if (k == dialog.length) {
+        that.input.keyboard.once("keydown", () => {
+          bubble.destroy();
+          background.destroy();
+          dialogText.destroy();
+          glados.destroy();
+          gladosBlink.destroy();
+          if (callback) callback();
+        });
+      }
+    },
+    callbackScope: null,
+    repeat: dialog.length
   });
 }
 
@@ -338,32 +358,12 @@ function create() {
   that.input.on("pointerup", shootLaser);
 }
 
-const pauseWithDialog = (dialog, callback) => {
-  that.physics.pause();
-  isPaused = true;
-
-  graphics = that.add.graphics();
-  graphics.fillStyle(0xffff00, 0.2);
-  graphics.fillRect(0, 0, 1600, 1200);
-
-  var style = {
-    font: "bold 164px Arial",
-    fill: "#fff",
-    boundsAlignH: "center",
-    boundsAlignV: "middle"
-  };
-
-  text = that.add.text(800, 500, dialog, style).setOrigin(0.5, 0.5);
-  text.setShadow(6, 6, "rgba(0,0,0,0.5)", 6);
-
-  if (anyKeyListener) anyKeyListener.removeAllListeners();
-  anyKeyListener = that.input.keyboard.on("keydown", callback);
-};
-
 const robotDeath = () => {
   currentDeathRate += 1;
   death_sound_effect.play();
-  pauseWithDialog("You're dead", () => that.scene.restart());
+  pauseWithDialog(currentLevel.onDeathText || "You're dead", () =>
+    that.scene.restart()
+  );
 };
 
 const initCollider = () => {
