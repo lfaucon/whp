@@ -220,6 +220,15 @@ function loadLevel(level) {
   that.physics.add.collider(laser_blue, blocks, makePortal("blue"));
   that.physics.add.collider(laser_yellow, blocks, makePortal("yellow"));
   initCollider();
+
+  // Creates the target
+  if (level.robot.hasBlueGun) {
+    target = that.physics.add.sprite(rx + 50, ry, "target");
+    target.body.allowGravity = false;
+    target.body.collideWorldBounds = true;
+  }
+
+  // Creates the introduction dialog
   if (!skipIntro) {
     pauseWithDialog(level.intro || "hello world....", () => {
       skipIntro = true;
@@ -352,11 +361,12 @@ function create() {
   });
   death_sound_effect = this.sound.add("death_sound", { loop: false });
 
-  // Camera :)
+  // Camera
   this.cameras.main.setZoom(0.5);
 
   // Level
-  var requestURL = "levels/" + levelNames[currentLevelIndex] + ".json";
+  const levelName = levelNames[currentLevelIndex] || "level99";
+  const requestURL = "levels/" + levelName + ".json";
   // requestURL = "levels/chapter4/level1.json";
   var request = new XMLHttpRequest();
   request.open("GET", requestURL);
