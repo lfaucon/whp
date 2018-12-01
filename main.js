@@ -235,6 +235,13 @@ function loadLevel(level) {
       that.physics.resume();
     });
   }
+
+  // Creates the target
+  if (level.robot.hasBlueGun) {
+    target = that.physics.add.sprite(rx + 50, ry, "target");
+    target.body.allowGravity = false;
+    target.body.collideWorldBounds = true;
+  }
 }
 
 function collectPoint(_, collectible) {
