@@ -12,7 +12,8 @@ You can play the game at that [link](https://lfaucon.github.io/whp/)
 
 ## Around the code
 
-Each level is described as a json file in he folder `levels/`. This file must describe 
+Each level is described as a json file in he folder `levels/`. This file must describe
+
 - `robot`: initial position of the robot and whether the robot can send blue or yellow portals
 - `blocks`: position of the black blocks
 - `killers`: position, initial speed and scale of the red blocks
@@ -27,4 +28,4 @@ Images and sounds are in the `assets/` folder
 
 The game was implemented using the game engine Phaser 3.
 
-The game uses the music Hot Drop Potato by Jesse Spillane.
+The game uses the music All Humans by Jesse Spillane.
