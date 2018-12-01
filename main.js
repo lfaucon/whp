@@ -243,8 +243,11 @@ function loadLevel(level) {
   // Physic group for lasers
   laser_blue = that.physics.add.group();
   laser_yellow = that.physics.add.group();
+  that.physics.add.overlap(laser_blue, victory, (_, x) => x.destroy());
+  that.physics.add.overlap(laser_yellow, victory, (_, x) => x.destroy());
   that.physics.add.collider(laser_blue, blocks, makePortal("blue"));
   that.physics.add.collider(laser_yellow, blocks, makePortal("yellow"));
+
   initCollider();
 
   // Creates the target

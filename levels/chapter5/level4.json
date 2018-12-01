@@ -1,0 +1,29 @@
+{
+  "robot": {
+    "position": [100, 600],
+    "hasBlueGun": true,
+    "hasYellowGun": true
+  },
+  "blocks": [
+    { "position": [150, 900], "scale": [6, 10] },
+    { "position": [600, 1050], "scale": [2, 2] },
+    { "position": [1000, 1050], "scale": [2, 4] },
+    { "position": [1400, 1050], "scale": [2, 2] },
+    { "position": [1550, 200], "scale": [2, 0.5] }
+  ],
+  "killers": [
+    { "position": [800, 12], "scale": [70, 2] },
+    { "position": [12, 303], "scale": [2, 29] },
+    { "position": [1588, 691], "scale": [2, 40] },
+    { "position": [400, 900], "speed": [250, 0] },
+    { "position": [450, 900], "speed": [250, 0] },
+    { "position": [500, 900], "speed": [250, 0] },
+    { "position": [400, 1094], "scale": [100, 1] }
+  ],
+  "collectibles": [
+    { "position": [600, 950] },
+    { "position": [1000, 900] },
+    { "position": [1400, 950] }
+  ],
+  "victory": { "position": [1594, 120], "scale": [1, 10] }
+}
