@@ -62,24 +62,32 @@ var game = new Phaser.Game(config);
 
 function preload() {
   var progress = this.add.graphics();
+  var loadingText = this.add.text(400, 300, "", {
+    font: "32px Courier",
+    fill: "#333"
+  });
+  loadingText.setOrigin(0.5, 0.5);
 
   this.load.on("progress", function(value) {
+    console.log(value);
     progress.clear();
     progress.fillStyle(0xffffff, 1);
     progress.fillRect(0, 270, 800 * value, 60);
+    loadingText.text = "loading... " + Math.floor(100 * value) + "%";
   });
 
   that = this;
   this.load.on("complete", function() {
     progress.destroy();
-    that.sound.add("music", { loop: true, volume: 0.25 }).play();
+    loadingText.destroy();
+    that.sound.add("music", { loop: true, volume: 0.15 }).play();
   });
 
   that = this;
 
   this.load.audio(
     "music",
-    "assets/sounds/Jesse_Spillane_-_02_-_Hot_Drop_Potato.mp3"
+    "assets/sounds/Jesse_Spillane_-_05_-_All_Humans.mp3"
   );
 
   this.load.audio("jump_sound", "assets/sounds/phaseJump2.mp3");
@@ -275,7 +283,7 @@ function pauseWithDialog(dialog, callback) {
   that.physics.pause();
 
   var background = that.add.graphics();
-  background.fillStyle(0xffff00, 0.2);
+  background.fillStyle(0xd6c7c7, 0.25);
   background.fillRect(0, 0, 1600, 1100);
 
   var bubble = that.add.graphics();
@@ -301,7 +309,7 @@ function pauseWithDialog(dialog, callback) {
 
   var k = 0;
   that.time.addEvent({
-    delay: 50,
+    delay: 40,
     callback: () => {
       k = k + 1;
       dialogText.text = dialog.slice(0, k);
