@@ -405,7 +405,15 @@ function create() {
   request.send();
 
   that.input.keyboard.on("keydown", shootLaser);
+  that.input.keyboard.on("keydown", cheatKeys);
 }
+
+const cheatKeys = key => {
+  if (key.altKey && key.shiftKey) {
+    if (key.keyCode == 68) robotDeath();
+    if (key.keyCode == 87) levelWon();
+  }
+};
 
 const robotDeath = () => {
   currentDeathRate += 1;
