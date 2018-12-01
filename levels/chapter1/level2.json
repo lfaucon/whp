@@ -1,6 +1,6 @@
 {
   "name": "First challenge",
-  "intro": "Let's get you some exercise",
+  "intro": "Why am I doing this to you?\n\nSuch a strange question.\n\nI never heard that one before..",
   "robot": {
     "position": [75, 700],
     "hasBlueGun": false,

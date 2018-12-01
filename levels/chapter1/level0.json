@@ -1,7 +1,8 @@
 {
-  "name": "Hate Red",
-  "intro": "This level is harder than \nyou think...",
-  "onDeathText": "See? I told you",
+  "name": "Red",
+  "intro": "You should also pick up red\npoints",
+  "onDeathText": "Hahahahaha !!\n\nYou're dead now.\n\nIt hurts, doesn't it?",
+  "onWinText": "Now I can start making your\nlife difficult",
   "robot": {
     "position": [75, 600],
     "hasBlueGun": false,

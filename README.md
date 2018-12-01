@@ -4,7 +4,7 @@ A game made for the jam [Game Off 2018](https://itch.io/jam/game-off-2018)
 
 ## Theme
 
-This game was intented as an hybrid between a 2D portal-like game and the world hardest game
+This game was intended as an hybrid between a 2D portal-like game and the world hardest game
 
 ## Play
 

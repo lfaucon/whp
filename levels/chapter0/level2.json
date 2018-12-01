@@ -1,6 +1,7 @@
 {
   "name": "Love Green 2",
-  "intro": "Hello there",
+  "intro": "Pick up green points before\npassing the portal",
+  "onWinText": "You got it!",
   "robot": {
     "position": [75, 600],
     "hasBlueGun": false,

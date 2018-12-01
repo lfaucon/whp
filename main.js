@@ -69,7 +69,6 @@ function preload() {
   loadingText.setOrigin(0.5, 0.5);
 
   this.load.on("progress", function(value) {
-    console.log(value);
     progress.clear();
     progress.fillStyle(0xffffff, 1);
     progress.fillRect(0, 270, 800 * value, 60);
