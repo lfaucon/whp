@@ -1,6 +1,8 @@
 {
   "name": "Portal",
-  "intro": "Now we start serious matters",
+  "intro": "Jump in the yellow portal,\nget out from the blue.\n\nDon't ask how it works, you\nwon't understand it anyway..",
+  "onDeathText": "Can you make little more\neffort?",
+  "onWinText": "How did you feel inside the\nworm hole?",
   "robot": {
     "position": [25, 800],
     "hasBlueGun": false,

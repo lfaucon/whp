@@ -1,29 +1,23 @@
 {
-  "name": "Gravity jump",
+  "name": "Higher",
   "intro": "You need to learn new tricks.\nGood luck... you will need it",
+  "onWinText": "Well done!\n\nIt's all about jumping!",
   "robot": {
     "position": [25, 800],
     "hasBlueGun": false,
     "hasYellowGun": false
   },
-  "portal_blue": { "position": [300, 994], "scale": [6, 1], "direction": "UP" },
+  "portal_blue": { "position": [650, 994], "scale": [8, 1], "direction": "UP" },
   "portal_yellow": {
-    "position": [1250, 994],
-    "scale": [6, 1],
+    "position": [1100, 632],
+    "scale": [8, 1],
     "direction": "UP"
   },
   "blocks": [
     { "position": [800, 1100], "scale": [32, 4] },
-    { "position": [550, 540], "scale": [4, 0.5] },
-    { "position": [625, 660], "scale": [7, 0.5] },
-    { "position": [700, 780], "scale": [10, 0.5] },
-    { "position": [775, 900], "scale": [13, 0.5] },
-    { "position": [1500, 450], "scale": [4, 0.5] }
+    { "position": [1000, 650], "scale": [8, 0.5] },
+    { "position": [1550, 400], "scale": [4, 0.5] }
   ],
-  "killers": [
-    { "position": [1500, 600], "speed": [400, 0] },
-    { "position": [1500, 720], "speed": [400, 0] },
-    { "position": [1500, 840], "speed": [400, 0] }
-  ],
-  "victory": { "position": [1594, 350], "scale": [1, 14] }
+  "killers": [],
+  "victory": { "position": [1594, 300], "scale": [1, 14] }
 }

@@ -1,8 +1,10 @@
 {
   "name": "Giant steps",
-  "intro": "Take that portal gun #1337\n\nMove your target with W,A,S,D\nand shot with space.\nGood luck",
+  "intro": "Take that portal gun.\n\nMove your target with W,A,S,D\nand shot with space.\nGood luck",
+  "onDeathText": "Do you know where to shoot?",
+  "onWinText": "Hold that gun son!",
   "robot": {
-    "position": [75, 700],
+    "position": [75, 950],
     "hasBlueGun": true,
     "hasYellowGun": false
   },

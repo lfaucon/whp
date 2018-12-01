@@ -1,6 +1,7 @@
 {
   "name": "Jump 2",
-  "intro": "Let's get you some exercise",
+  "intro": "One more easy level before we\nget serious",
+  "onWinText": "Great performance so far...\n\nMake it last!",
   "robot": {
     "position": [75, 700],
     "hasBlueGun": false,

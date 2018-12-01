@@ -1,4 +1,8 @@
 {
+  "name": "Congratulation",
+  "intro": "You have gone far.\n\nMuch further than I expected",
+  "onDeathText": "You won't go much further",
+  "onWinText": "Where will you stop?\n\nAre you invincible?",
   "robot": {
     "position": [100, 950],
     "hasBlueGun": true,

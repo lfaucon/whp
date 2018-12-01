@@ -1,6 +1,6 @@
 {
   "name": "Careful",
-  "intro": "Now show me what you are \ncapable of..",
+  "intro": "Now show me what you are\ncapable of..",
   "onWinText": "You are not as weak as I\nthought, but the hardest is\nyet to come",
   "onDeathText": "Hahaha ! ! !\n\nYou will never make it...",
   "robot": {

@@ -1,8 +1,10 @@
 {
-  "name": "Giant stairs 2",
+  "name": "Growing up",
   "intro": "I just improved your gun. Now\nyou can shoot yellow portal.\n\nSimply hold SHIFT when you\nshoot.",
+  "onDeathText": "It's not even hard",
+  "onWinText": "I feel like a mother watching\nher child growing up\n\n...wait a second...",
   "robot": {
-    "position": [75, 700],
+    "position": [75, 950],
     "hasBlueGun": true,
     "hasYellowGun": true
   },

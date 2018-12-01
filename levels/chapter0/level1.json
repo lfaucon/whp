@@ -1,6 +1,7 @@
 {
   "name": "Jump",
   "intro": "Same thing here\n\nThis should not be too hard\nfor you... yet...",
+  "onWinText": "I hope your legs are not tired\nafter this",
   "robot": {
     "position": [75, 700],
     "hasBlueGun": false,

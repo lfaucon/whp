@@ -1,4 +1,8 @@
 {
+  "name": "Capable",
+  "intro": "I bet you will fail here.",
+  "onDeathText": "Fail, die, die again",
+  "onWinText": "Congratulation for passing\nthat level.\n\nThe next one will not be\nthat easy",
   "robot": {
     "position": [100, 600],
     "hasBlueGun": true,

@@ -1,28 +1,31 @@
 {
-  "name": "Gravity Jump 2",
-  "intro": "You better be lucky on that\none...",
+  "name": "Gravity",
+  "intro": "...",
+  "onDeathText": "When you die, are you sure\nyou are still yourself\nafterwards?",
+  "onWinText": "Flying... falling... \n\nWhat's the difference?",
   "robot": {
     "position": [25, 800],
     "hasBlueGun": false,
     "hasYellowGun": false
   },
-  "portal_blue": {
-    "position": [1400, 994],
-    "scale": [8, 1],
-    "direction": "UP"
-  },
+  "portal_blue": { "position": [300, 994], "scale": [6, 1], "direction": "UP" },
   "portal_yellow": {
-    "position": [1594, 350],
-    "scale": [1, 8],
-    "direction": "LEFT"
+    "position": [1250, 994],
+    "scale": [6, 1],
+    "direction": "UP"
   },
   "blocks": [
     { "position": [800, 1100], "scale": [32, 4] },
-    { "position": [700, 650], "scale": [8, 0.5] }
+    { "position": [550, 540], "scale": [4, 0.5] },
+    { "position": [625, 660], "scale": [7, 0.5] },
+    { "position": [700, 780], "scale": [10, 0.5] },
+    { "position": [775, 900], "scale": [13, 0.5] },
+    { "position": [1500, 450], "scale": [4, 0.5] }
   ],
-  "killers": [],
-  "victory": {
-    "position": [700, 632],
-    "scale": [14, 1]
-  }
+  "killers": [
+    { "position": [1500, 600], "speed": [400, 0] },
+    { "position": [1500, 720], "speed": [400, 0] },
+    { "position": [1500, 840], "speed": [400, 0] }
+  ],
+  "victory": { "position": [1594, 350], "scale": [1, 14] }
 }

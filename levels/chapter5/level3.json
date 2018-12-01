@@ -1,4 +1,8 @@
 {
+  "name": "Intelligence",
+  "intro": "You are my very best test\nsubject so far.",
+  "onDeathText": "I should not have given\nyou a compliment.",
+  "onWinText": "Yes! I made it!\n\nI've created true\nintelligence!",
   "robot": {
     "position": [100, 950],
     "hasBlueGun": true,

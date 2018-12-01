@@ -1,6 +1,8 @@
 {
-  "name": "Jump 3",
-  "intro": "Let's get you some exercise",
+  "name": "Higher",
+  "intro": "This one is a bit tricky",
+  "onDeathText": "Come on! It's not as hard as\nyou make it seem..",
+  "onWinText": "That took you long enough..",
   "robot": {
     "position": [75, 750],
     "hasBlueGun": false,

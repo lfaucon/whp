@@ -1,8 +1,10 @@
 {
-  "name": "Giant stairs 5",
+  "name": "Favorite",
   "intro": "Try giving a small\nperpendicular push before\nentering a portal, it will\nslightly change your exit\nangle",
+  "onDeathText": "How many lives do you think\nyou have?",
+  "onWinText": "You truely are my Favorite",
   "robot": {
-    "position": [75, 700],
+    "position": [75, 950],
     "hasBlueGun": true,
     "hasYellowGun": false
   },

@@ -1,8 +1,10 @@
 {
-  "name": "Giant stairs 6",
-  "intro": ".",
+  "name": "Trap",
+  "intro": "This is a trap",
+  "onDeathText": "You've got trapped",
+  "onWinText": "I can see some brain cells\nin that small pink cube.",
   "robot": {
-    "position": [75, 700],
+    "position": [75, 950],
     "hasBlueGun": true,
     "hasYellowGun": false
   },

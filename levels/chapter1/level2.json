@@ -1,6 +1,8 @@
 {
   "name": "First challenge",
   "intro": "Why am I doing this to you?\n\nSuch a strange question.\n\nI never heard that one before..",
+  "onDeathText": "Are you suffering?",
+  "onWinText": "You deserve some rest now..\n\nJust kidding! Let's go",
   "robot": {
     "position": [75, 700],
     "hasBlueGun": false,

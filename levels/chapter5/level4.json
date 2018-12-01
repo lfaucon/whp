@@ -1,4 +1,8 @@
 {
+  "name": "Mother",
+  "intro": "Pinky. . .      \n\nI am your mother.\n\nMake me proud",
+  "onDeathText": "Such disappointent.",
+  "onWinText": "I.. am.. complete..\n\nThank you Pinky",
   "robot": {
     "position": [100, 600],
     "hasBlueGun": true,

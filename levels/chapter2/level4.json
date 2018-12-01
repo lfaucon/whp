@@ -1,4 +1,8 @@
 {
+  "name": "Dare",
+  "intro": "This is not testing your\nintelligence. It is testing\nyour guts",
+  "onWinText": "Was it fun?",
+  "onDeathText": "I knew you would fail me",
   "robot": {
     "position": [25, 400],
     "hasBlueGun": false,

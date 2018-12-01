@@ -79,7 +79,7 @@ function preload() {
   this.load.on("complete", function() {
     progress.destroy();
     loadingText.destroy();
-    that.sound.add("music", { loop: true, volume: 0.15 }).play();
+    that.sound.add("music", { loop: true, volume: 0.08 }).play();
   });
 
   that = this;
@@ -271,10 +271,10 @@ function collectPoint(_, collectible) {
   collect_sound_effect.play();
 }
 
-function levelWon() {
-  if (collectibles.getChildren().length > 0) return;
+function levelWon(force) {
+  if (!(force === "cheat") && collectibles.getChildren().length > 0) return;
   victory_sound_effect.play();
-  pauseWithDialog(currentLevel.onWinText || "You won!", () => {
+  pauseWithDialog(currentLevel.onWinText || "Well done!", () => {
     currentLevelIndex = currentLevelIndex + 1;
     skipIntro = false;
     that.scene.restart();
@@ -411,7 +411,7 @@ function create() {
 const cheatKeys = key => {
   if (key.altKey && key.shiftKey) {
     if (key.keyCode == 68) robotDeath();
-    if (key.keyCode == 87) levelWon();
+    if (key.keyCode == 87) levelWon("cheat");
   }
 };
 

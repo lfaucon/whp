@@ -1,5 +1,8 @@
 {
   "name": "Loop",
+  "intro": "You probably won't make it.",
+  "onDeathText": "Expected. . .",
+  "onWinText": "I must admit, I'm\nimpressed!",
   "robot": {
     "position": [75, 500],
     "hasBlueGun": false,

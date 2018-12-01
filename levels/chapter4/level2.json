@@ -1,6 +1,8 @@
 {
   "name": "Flying",
-  "intro": "Why planes do not fall?\n\nCan you also make Gravity\npull you up?",
+  "intro": "Why planes do not fall?\n\nCan you also make gravity\npull you up?",
+  "onDeathText": "You must be doing something\nwrong",
+  "onWinText": "You must be doing something\nright",
   "robot": {
     "position": [75, 100],
     "hasBlueGun": true,

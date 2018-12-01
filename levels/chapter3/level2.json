@@ -1,8 +1,10 @@
 {
-  "name": "Giant stairs 3 ",
-  "intro": ".",
+  "name": "Faster",
+  "intro": "Just fall, but fast",
+  "onDeathText": "I said \"fall\", not \"fail\"!",
+  "onWinText": "That must be a record!",
   "robot": {
-    "position": [75, 700],
+    "position": [75, 950],
     "hasBlueGun": true,
     "hasYellowGun": false
   },

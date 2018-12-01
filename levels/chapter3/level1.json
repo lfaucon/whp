@@ -1,8 +1,10 @@
 {
-  "name": "Giant stairs 2",
-  "intro": ".",
+  "name": "Secret",
+  "intro": "You have plenty of options.\n\nCan you make it?",
+  "onDeathText": "Aim, shoot, jump on the red\nblock",
+  "onWinText": "I've got to tell you\nsomething. . .",
   "robot": {
-    "position": [75, 700],
+    "position": [75, 950],
     "hasBlueGun": true,
     "hasYellowGun": false
   },

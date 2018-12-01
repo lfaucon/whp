@@ -1,4 +1,8 @@
 {
+  "name": "Pinky",
+  "intro": "Can I call you Pinky?\n\nIt's better than test\nsubject #1337, right?",
+  "onDeathText": "I thought a name would\nmake you more capable..",
+  "onWinText": "Good job Pinky!\n\nKeep going",
   "robot": {
     "position": [100, 600],
     "hasBlueGun": true,

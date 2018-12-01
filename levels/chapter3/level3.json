@@ -1,8 +1,10 @@
 {
-  "name": "Giant stairs 4",
-  "intro": ".",
+  "name": "Feelings",
+  "intro": "That thing I want to tell you..\n\nI'va had it on my mind for\nsome time now",
+  "onDeathText": "I guess it doesn't matter\nanymore",
+  "onWinText": "You know, for me you are more\nthan just a test subject..\n\nYou're my favorite",
   "robot": {
-    "position": [75, 700],
+    "position": [75, 950],
     "hasBlueGun": true,
     "hasYellowGun": false
   },
