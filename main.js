@@ -358,8 +358,8 @@ function create() {
   this.cameras.main.setZoom(0.5);
 
   // Level
-  const levelName = "alternate_portals";
-  //const levelName = levelNames[currentLevelIndex] || "level99";
+  //const levelName = "alternate_portals";
+  const levelName = levelNames[currentLevelIndex] || "level99";
   const requestURL = "levels/" + levelName + ".json";
   // requestURL = "levels/chapter4/level1.json";
   var request = new XMLHttpRequest();
