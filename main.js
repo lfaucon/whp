@@ -61,7 +61,26 @@ var targetUp, targetDown, targetLeft, targetRight;
 var game = new Phaser.Game(config);
 
 function preload() {
+  var progress = this.add.graphics();
+
+  this.load.on("progress", function(value) {
+    progress.clear();
+    progress.fillStyle(0xffffff, 1);
+    progress.fillRect(0, 270, 800 * value, 60);
+  });
+
   that = this;
+  this.load.on("complete", function() {
+    progress.destroy();
+    that.sound.add("music", { loop: true, volume: 0.25 }).play();
+  });
+
+  that = this;
+
+  this.load.audio(
+    "music",
+    "assets/sounds/Jesse_Spillane_-_02_-_Hot_Drop_Potato.mp3"
+  );
 
   this.load.audio("jump_sound", "assets/sounds/phaseJump2.mp3");
   this.load.audio("collect_sound", "assets/sounds/powerUp6.mp3");
@@ -515,7 +534,7 @@ function update(time, delta) {
     else target.setVelocityX(0);
   }
 
-  gladosBlink.setAlpha(1 - Math.cos(time / 640) ** 6);
+  if (gladosBlink) gladosBlink.setAlpha(1 - Math.cos(time / 640) ** 6);
 
   const v = robot.body.velocity.x;
   const gSign = that.physics.world.gravity.y < 0 ? 1 : -1;
