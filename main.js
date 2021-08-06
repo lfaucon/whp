@@ -26,6 +26,9 @@ var TARGET_SPEED = 600;
 
 var currentLevel;
 var currentLevelIndex = 0;
+if (location.search) {
+  currentLevelIndex = Number(location.search.substr(1))
+}
 var currentDeathRate = 0;
 
 var gladosBlink;
